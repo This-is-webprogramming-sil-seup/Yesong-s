@@ -1,10 +1,24 @@
-<!DOCTYPE html>
+<%@ page import="java.sql.*" %>
+<%@ page language="java" contentType="text/html;charset=utf-8"
+pageEncoding="utf-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
 <html>
+<meta charset="utf-8">
 
 <head>
 </head>
 
 <body>
+  <%
+    var idArray=new Array();
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webprogramming?serverTimezone=UTC", "root", "3br3br");
+    Statement stmt=conn.createStatement();
+    ResultSet rs=stmt.executeQuery("SELECT * from user_data");
+    while(rs.next()){
+    idArray.push(rs.getString("user_id"));
+    }
+  %>
   <script>
     function info_check() {
       var id = document.getElementById("registerID").value;
@@ -40,6 +54,8 @@
         alert("문자와 숫자 포함 8글자 이상의 비밀번호를 입력해주세요");
         return false;
       }
+
+      // ID duplication check
     }
   </script>
   <form action="registerCheck.jsp" method="post">
