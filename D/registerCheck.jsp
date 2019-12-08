@@ -5,7 +5,7 @@ pageEncoding="utf-8"%>
 
 <%
 Class.forName("com.mysql.jdbc.Driver");
-Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webprogramming?serverTimezone=UTC" , "root", "3br3br");
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC" , "root", "3br3br");
 
 String id=request.getParameter("id");
 String pw=request.getParameter("pw");
@@ -29,6 +29,6 @@ conn.close();
 %>
 <html>
 가입 완료되었습니다.<br> 3초 후 자동으로 로그인 화면으로 이동합니다.
-<meta http-equiv="refresh" content="3;URL='login.html'">
+<meta http-equiv="refresh" content="3;URL='login.jsp'">
 
 </html>

@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html;charset=utf-8"
 pageEncoding="utf-8"%>
 <% request.setCharacterEncoding("utf-8"); %>
@@ -10,13 +11,15 @@ pageEncoding="utf-8"%>
 
 <body>
   <%
-    var idArray=new Array();
     Class.forName("com.mysql.jdbc.Driver");
-    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/webprogramming?serverTimezone=UTC", "root", "3br3br");
+    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
     Statement stmt=conn.createStatement();
     ResultSet rs=stmt.executeQuery("SELECT * from user_data");
+
+    ArrayList<String> ids=new ArrayList<String>();
+
     while(rs.next()){
-    idArray.push(rs.getString("user_id"));
+      ids.add(rs.getString("user_id"));
     }
   %>
   <script>
@@ -55,12 +58,21 @@ pageEncoding="utf-8"%>
         return false;
       }
 
+    }
+    function id_check(){
+      var ids = [ <% for (int i = 0; i < ids.size(); i++) { %> "<%= ids.get(i) %>"<%= i < ids.size() - 1 ? "," : "" %> <% } %>];
+      var id = document.getElementById("registerID");
+
       // ID duplication check
+      if(ids.indexOf(id.value)!=-1) {
+        alert("중복된 아이디입니다.");
+        id.value="";
+      }
     }
   </script>
   <form action="registerCheck.jsp" method="post">
     <label>ID : <input type="text" id="registerID" name="id" />
-      <input type="button" name="check_dup" value="중복체크" /> </label><br>
+      <input type="button" name="check_dup" value="중복체크" onclick="id_check()"/> </label><br>
     <label>PW : <input type="password" id="registerPW" name="pw" /></label><br>
     <label>Re-PW : <input type="password" id="registerRePW" /></label><br>
     <label>이름 : <input type="text" id="registerName" name="name" /></label><br>
@@ -68,7 +80,7 @@ pageEncoding="utf-8"%>
       <input type="radio" id="chk_info2" value="student" /> 학습자 </label><br><br>
     <input type="submit" name="register" value="가입" onclick="info_check()" />
     &nbsp<input type="reset" value="다시작성" />
-    &nbsp<input type="button" name="cancel" value="취소" onclick="location.href='login.html'" />
+    &nbsp<input type="button" name="cancel" value="취소" onclick="location.href='login.jsp'" />
   </form>
 </body>
 

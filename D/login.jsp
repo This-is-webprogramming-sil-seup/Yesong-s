@@ -1,8 +1,29 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html;charset=utf-8"
+pageEncoding="utf-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
+
 <!DOCTYPE html>
+<meta charset="UTF-8"/>
 <html>
   <head>
   </head>
   <body>
+    <%
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
+      Statement stmt=conn.createStatement();
+      ResultSet rs=stmt.executeQuery("SELECT * from user_data");
+  
+      ArrayList<String> ids=new ArrayList<String>();
+      ArrayList<String> pws=new ArrayList<String>();
+  
+      while(rs.next()){
+        ids.add(rs.getString("user_id"));
+        pws.add(rs.getString("user_pw"));
+      }
+    %>
     <p><span id="UserInfo"></span></p>
     <script>
       function setCookie(name, value, expiredays) { //쿠키 저장함수
@@ -54,7 +75,7 @@
       <br><input type="checkbox" id="remain" />아이디 저장
     </form>
 
-    <br><a href="register.html"> 회원가입 </a>
+    <br><a href="register.jsp"> 회원가입 </a>
 
   </body>
 </html>
