@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+    table {
+        width: 100%;
+        border: 1px solid #444444;
+        border-collapse: collapse;
+    }
+    th,
+    td {
+        border: 1px solid #444444;
+    }
+    </style>
+  </head>
+  <body>
+    <form method="POST" action=""> <input type ="button" value="뒤로 가기" onclick="goback()" /> </form>
+    <br>
+    <script>
+        function goback() {
+            location.href = "user_main.html";
+        }
+        var s = '[{"num":"1", "question": "가는 무엇일까요?", "your_ans":"ex2", "ex1":"보기1번", "ex2":"보기2번", "ex3":"보기3번", "ex4":"보기4번", "ex5":"보기5번", "ans":"ex3", "grade": "20"},'
+            + '{"num":"2", "question": "나는 무엇일까요?", "your_ans":"ex3", "ex1":"보기1번", "ex2":"보기2번", "ex3":"보기3번", "ex4":"보기4번", "ex5":"보기5번", "ans":"ex2", "grade": "20"},'
+            + '{"num":"3", "question": "다는 무엇일까요?", "your_ans":"ex1", "ex1":"보기1번", "ex2":"보기2번", "ex3":"보기3번", "ex4":"보기4번", "ex5":"보기5번", "ans":"ex5", "grade": "20"},'
+            + '{"num":"4", "question": "라는 무엇일까요?", "your_ans":"ex3", "ex1":"보기1번", "ex2":"보기2번", "ex3":"보기3번", "ex4":"보기4번", "ex5":"보기5번", "ans":"ex3", "grade": "20"},'
+            + '{"num":"5", "question": "마는 무엇일까요?", "your_ans":"ex1", "ex1":"보기1번", "ex2":"보기2번", "ex3":"보기3번", "ex4":"보기4번", "ex5":"보기5번", "ans":"ex1", "grade": "20"}]';
+        var test_info = JSON.parse(s);
+        var row = Number(test_info.length);
+        document.write("<table><tr></tr>");
+        for (i = 0; i < row; i++) {
+            document.write("<tr><td>" + test_info[i].num.big().bold() + ". " + test_info[i].question.big().bold() + " (" + test_info[i].grade + ")" + " [" + test_info[i].your_ans.split("ex")[1].fontcolor("blue").bold() + "] " + "</td></tr>");
+            if (test_info[i].ans == 'ex1') {
+                document.write("<tr><td>" + "1) " + test_info[i].ex1.fontcolor("red").bold() + "</td></tr>");
+            }
+            else if (test_info[i].ans != 'ex1') {
+                document.write("<tr><td>" + "1) " + test_info[i].ex1 + "</td></tr>");
+            }
+            if (test_info[i].ans == 'ex2') {
+                document.write("<tr><td>" + "2) " + test_info[i].ex2.fontcolor("red").bold() + "</td></tr>");
+            }
+            else if (test_info[i].ans != 'ex2') {
+                document.write("<tr><td>" + "2) " + test_info[i].ex2 + "</td></tr>");
+            }
+            if (test_info[i].ans == 'ex3') {
+                document.write("<tr><td>" + "3) " + test_info[i].ex3.fontcolor("red").bold() + "</td></tr>");
+            }
+            else if (test_info[i].ans != 'ex3') {
+                document.write("<tr><td>" + "3) " + test_info[i].ex3 + "</td></tr>");
+            }
+            if (test_info[i].ans == 'ex4') {
+                document.write("<tr><td>" + "4) " + test_info[i].ex4.fontcolor("red").bold() + "</td></tr>");
+            }
+            else if (test_info[i].ans != 'ex4') {
+                document.write("<tr><td>" + "4) " + test_info[i].ex4 + "</td></tr>");
+            }
+            if (test_info[i].ans == 'ex5') {
+                document.write("<tr><td>" + "5) " + test_info[i].ex5.fontcolor("red").bold() + "</td></tr>");
+            }
+            else if (test_info[i].ans != 'ex5') {
+                document.write("<tr><td>" + "5) " + test_info[i].ex5 + "</td></tr>");
+            }
+            document.write("<tr><td><br></td></tr>");
+        }
+        document.write("</table>");
+        
+        var sum = 0;
+        
+        document.write("<table></td><td>번호</td><td>결과</td><td>배점</tr>");
+        for (i = 0; i < row; i++) {
+            document.write("<tr><td>" + test_info[i].num + "</td>");
+            if (test_info[i].ans == test_info[i].your_ans) {
+                document.write("<td>" + "O" + "</td>");
+                sum += Number(test_info[i].grade);
+            }
+            else if (test_info[i].ans != test_info[i].your_ans) {
+                document.write("<td>" + "X" + "</td>");
+            }
+            document.write("<td>" + test_info[i].grade + "</td></tr>");
+        }
+        document.write("<tr><td colspan=\"2\">점수</td><td>" + sum + "</td></tr>");
+        document.write("</table>");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+    table {
+        width: 100%;
+        border: 1px solid #444444;
+        border-collapse: collapse;
+    }
+    th,
+    td {
+        border: 1px solid #444444;
+    }
+    </style>
+  </head>
+  <body>
+    <h1> 시험 목록 </h1>
+    <form method="POST" action="">
+      <select name="category">
+        <option value="done" selected>응시/미응시여부</option>
+        <option value="test_name">시험명</option>
+        <option value="prof_name">교수자명</option>
+      </select>
+      <input type="text" id="search" />
+      <input type ="button" value="검색" onclick="search()" />
+      <input type ="button" value="정렬" onclick="sort()" />
+    </form>
+    <br>
+    <script>
+        var s = '[{"name":"Korean", "id": "Kim", "sub_date":"19.02.01 ~ 19.03.01", "done": "O", "grade": "80", "total":"100"},'
+            + '{"name":"Math", "id": "Yoon", "sub_date":"19.02.12 ~ 19.03.12", "done": "X", "grade": "none", "total":"100"},'
+            + '{"name":"Science", "id": "Seo", "sub_date":"19.01.11 ~ 19.02.11", "done": "O", "grade": "90", "total":"100"},'
+            + '{"name":"Music", "id": "Ha", "sub_date":"19.08.11 ~ 19.09.11", "done": "O", "grade": "100", "total":"100"}]';
+        var test_list = JSON.parse(s);
+        var row = Number(test_list.length);
+        document.write("<table></td><td>시험명</td><td>생성자명</td><td>응시기간</td><td>응시여부</td><td>성적</td><td>총배점</td></tr>");
+        for (i = 0; i < row; i++) {
+            var id = test_list[i].name;
+            document.write("<tr>");
+            if (test_list[i].done == 'O') {
+                document.write("<td><a href = \"didtest.html\" + >"+test_list[i].name+"</a></td>");
+            }
+            else if (test_list[i].done == 'X') {
+                document.write("<td><a href = \"willtest.html\" + >"+test_list[i].name+"</a></td>");
+            }
+            document.write("<td>" + test_list[i].id + "</td>");
+            document.write("<td>" + test_list[i].sub_date + "</td>");
+            document.write("<td>" + test_list[i].done);
+            document.write("<td>" + test_list[i].grade);        
+            document.write("<td>" + test_list[i].total);         
+            document.write("</td></tr>");
+        }
+        document.write("</table>");
+        function search() {
+        
+        }
+        function sort() {
+
+        }
+    </script>
+  </body>
+</html>

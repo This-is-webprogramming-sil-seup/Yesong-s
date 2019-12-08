@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h4>학생 성적</h4>
+    <p style = "background-color:cornflowerblue" id = "score">
+    </p>
+    <script>
+        var s = '[{"name":"Hong","age":21,"kor":"89","eng":"92"}, {"name":"Kim","age":22,"kor":"99","eng":"100"}, {"name":"Park","age":23,"kor":"88","eng":"98"}]';
+        var students = JSON.parse(s);
+        var sum = 0;
+        
+        for(var i=0;i<students.length;i++){
+            var br = document.createElement("br");
+            var sdText = document.createTextNode(i+1+". "+students[i].name+'('+students[i].age+'): 국어 - ' + students[i].kor + ' / 영어 : '+students[i].eng);
+            sum  = sum + parseInt(students[i].kor) + parseInt(students[i].eng);
+            document.getElementById("score").appendChild(sdText);
+            document.getElementById("score").appendChild(br);
+        }
+        var avg = sum / (students.length * 2);
+        var br1 = document.createElement("br");
+        document.getElementById("score").appendChild(br1);
+        var sumText = document.createTextNode("총점: "+sum);
+        var avgText = document.createTextNode("평균: "+avg.toFixed(2));
+        document.getElementById("score").appendChild(sumText);
+        var br2 = document.createElement("br");
+        document.getElementById("score").appendChild(br2);
+        document.getElementById("score").appendChild(avgText);
+    </script>
+</body>
+</html>
