@@ -18,10 +18,12 @@ pageEncoding="utf-8"%>
   
       ArrayList<String> ids=new ArrayList<String>();
       ArrayList<String> pws=new ArrayList<String>();
+      ArrayList<String> grades=new ArrayList<String>();
   
       while(rs.next()){
         ids.add(rs.getString("user_id"));
         pws.add(rs.getString("user_pw"));
+        grades.add(rs.getString("user_grade"));
       }
     %>
     <p><span id="UserInfo"></span></p>
@@ -46,8 +48,13 @@ pageEncoding="utf-8"%>
           }
       }
       function login() {
+        var ids = [ <% for (int i = 0; i < ids.size(); i++) { %> "<%= ids.get(i) %>"<%= i < ids.size() - 1 ? "," : "" %> <% } %>];
+        var pws = [ <% for (int j = 0; j < pws.size(); j++) { %> "<%= pws.get(j) %>"<%= j < pws.size() - 1 ? "," : "" %> <% } %>];
+        var grades = [ <% for (int k = 0; k < pws.size(); k++) { %> "<%= grades.get(k) %>"<%= k < grades.size() - 1 ? "," : "" %> <% } %>];
+
         var objLoginID = document.getElementById("loginID");
         var objLoginPW = document.getElementById("loginPW");
+
         if (objLoginID.value == "") {
           alert("아이디를 입력하세요");
           objLoginID.focus();
@@ -64,6 +71,20 @@ pageEncoding="utf-8"%>
         }
         else { //아이디 저장을 체크하지 않았을 때
           setCookie("id", objLoginID, 0); //날짜를 0으로 저장하여 쿠키 삭제
+        }
+
+        var tmp=ids.indexOf(objLoginID.value);
+        if(tmp==-1){
+            window.alert("존재하지 않는 ID입니다.");
+            objLoginID.value="";
+            objLoginPW.value="";
+        }else if(pws[tmp]!=objLoginPW.value){
+            window.alert("ID나 비밀번호가 틀렸습니다.");
+            objLoginID.value="";
+            objLoginPW.value="";
+        }else{
+            if(grades[tmp]=="professor") location.href='../W/professor.html';
+            else location.href='user_main.html';
         }
       }
     </script>
