@@ -10,7 +10,9 @@ Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_
 String id=request.getParameter("id");
 String pw=request.getParameter("pw");
 String name=request.getParameter("name");
-String grade=request.getParameter("grade");
+String grade=request.getParameter("grade1");
+
+if(grade==null) grade=request.getParameter("grade2");
 
 out.println(id);
 out.println(pw);

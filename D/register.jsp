@@ -76,8 +76,8 @@ pageEncoding="utf-8"%>
     <label>PW : <input type="password" id="registerPW" name="pw" /></label><br>
     <label>Re-PW : <input type="password" id="registerRePW" /></label><br>
     <label>이름 : <input type="text" id="registerName" name="name" /></label><br>
-    <label>등급 : <input type="radio" id="chk_info1" value="professor" name="grade" /> 교수자
-      <input type="radio" id="chk_info2" value="student" /> 학습자 </label><br><br>
+    <label>등급 : <input type="radio" id="chk_info1" value="professor" name="grade1" /> 교수자
+      <input type="radio" id="chk_info2" value="student" name="grade2"/> 학습자 </label><br><br>
     <input type="submit" name="register" value="가입" onclick="info_check()" />
     &nbsp<input type="reset" value="다시작성" />
     &nbsp<input type="button" name="cancel" value="취소" onclick="location.href='login.jsp'" />

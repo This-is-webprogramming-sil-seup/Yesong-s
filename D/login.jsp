@@ -83,16 +83,21 @@ pageEncoding="utf-8"%>
             objLoginID.value="";
             objLoginPW.value="";
         }else{
-            if(grades[tmp]=="professor") location.href='../W/professor.html';
-            else location.href='user_main.html';
+            if(grades[tmp]=="professor") {
+              window.alert("HI");
+              location.href='../W/professor.html';
+            }
+            else{
+              location.href='user_main.html';
+            }
         }
       }
     </script>
 
-    <form method="POST" action="">
+    <form method="POST">
       <label>아이디<br><input type="text" id="loginID" /></label><br>
       <label>비밀번호<br><input type="password" id="loginPW" /></label>
-      &nbsp<input type ="submit" value="로그인" onclick="login()" />
+      &nbsp<input type ="submit" value="로그인" onclick="login(); return false" />
       <br><input type="checkbox" id="remain" />아이디 저장
     </form>
 
