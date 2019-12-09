@@ -7,7 +7,6 @@ pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <meta charset="UTF-8" />
 <html>
-
 <head>
 <style>
     body { background-color: #DADADA; text-align: center; }
@@ -42,7 +41,6 @@ pageEncoding="utf-8"%>
     }
 </style>
 </head>
-
 <body>
   <%
       Class.forName("com.mysql.jdbc.Driver");
@@ -120,15 +118,15 @@ pageEncoding="utf-8"%>
         objLoginPW.value = "";
       } else {
         if (grades[tmp] == "professor") {
-          location.href = '../W/professor.html?name=' + objLoginID.value;
+          location.href = '../W/professor.jsp?name=' + objLoginID.value;
         }
         else {
           location.href = 'user_main.html';
         }
       }
     }
-
   </script>
+
 
   <form method="POST">
       <table style="margin: 0 auto;">
@@ -137,15 +135,16 @@ pageEncoding="utf-8"%>
       <label><input type="text" id="loginID" placeholder="아이디" /></label><br>
       <label><input type="password" id="loginPW" placeholder="비밀번호" /></label><br>
       <input type="checkbox" id="remain"/><a style="font-size:12px; font-weight:bold; color: gray;">아이디 저장</a>
-      <br><input class="login_btn" type ="submit" value="로그인" onclick="login()" /> <br>
+      <br><input class="login_btn" type ="submit" value="로그인" onclick="login();return false" /> <br>
+
       <br><br>
       </td></tr>
       </table>
   </form>
-   <table style="margin: 0 auto; margin-top:10px;">
-   <tr style="background-color:white;"><td style="width:483px; border-radius:5px; padding:10px; font-size:13px;">
-   로그인 할 계정이 없다면 <a id="here" href="register.html"> 여기</a>를 눌러주세요.
-   </td></tr>
-   </table>
+  <table style="margin: 0 auto; margin-top:10px;">
+  <tr style="background-color:white;"><td style="width:483px; border-radius:5px; padding:10px; font-size:13px;">
+  로그인 할 계정이 없다면 <a id="here" href="register.jsp"> 여기</a>를 눌러주세요.
+  </td></tr>
+  </table>
 </body>
 </html>

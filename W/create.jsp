@@ -1,3 +1,8 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html;charset=utf-8"
+pageEncoding="utf-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
 <meta charset="UTF-8">
 <html>
 
@@ -7,7 +12,8 @@
 </head>
 
 <body>
-    <form name="frm" action="createSend.jsp" method="post">
+    <% String name=request.getParameter("name");%>
+    <form name="frm" action="createSend.jsp?name=<%=name%>" method="post">
         시험명:<input type="text" id="name" name="test_name" required><br>
         응시기간:<input type="date" id="date1" name="date1">~<input type="date" id="date2" name="date2" required><br>
         응시시간:<input type="number" id="time" name="time" required><br>

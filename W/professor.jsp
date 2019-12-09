@@ -39,17 +39,36 @@ pageEncoding="utf-8"%>
         <tbody id="testlist"></tbody>
     </table>
     <% String name=request.getParameter("name");%>
-    <input type="button" id="create" value="시험생성" onclick="location.href='create.html?name=<%=name%>'" <input type="button"
+    <input type="button" id="create" value="시험생성" onclick="location.href='create.jsp?name=<%=name%>'" <input type="button"
         id="delete" value="삭제" onclick="delete_row()">
     <input type="button" id="copy" value="복사" onclick="copy_row()">
 
 
     <script>
-        function init() {
-            var s = '[{"name": "나의 기분","make":"2019-12-05","duration": 7,"time": 2,"auto": "false","applicantsInfo": [{"done":10,"total":30,"list":[{}]}],"average": 78,},{"name": "하기 싫다","make":"2019-12-07","duration": 3,"time": 1,"auto": "true","applicantsInfo": [{"done":30,"total":41,"list":[{}]}],"average": 100}]';
-            var tests = eval("(" + s + ")");
-            var length = Object.keys(tests).length;
+        var s="[";
+        <%
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
+        String query="SELECT * FROM test_data where professor_id=";
+        query+="'"+name+"';";
+        Statement stmt=conn.createStatement();
+        ResultSet rs=stmt.executeQuery(query);
 
+        while(rs.next()){%>
+        s+='{"name": "<%=rs.getString("test_name")%>",';
+        s+='"make":"<%=rs.getString("Birthday")%>",';
+        s+='"duration": "<%=rs.getString("test_start_period")%>~<%=rs.getString("test_end_period")%>"';
+        s+=',"time": "<%=rs.getString("test_start_time")%>",';
+        s+='"auto": "false",';
+        s+='"applicantsInfo": [{"done":10,"total":30,"list":[{}]}],';
+        s+='"average": 78,},';
+        <%}%>
+        s=s.substr(0,s.length-1);
+        s+="]";
+        
+        var tests = eval("(" + s + ")");
+        var length = Object.keys(tests).length;
+        function init() {
             for (var i = 0; i < length; i++) {
                 add_row(i, tests);
             }
@@ -74,7 +93,7 @@ pageEncoding="utf-8"%>
             cell5.innerHTML = tests[i].time;
             cell6.innerHTML = tests[i].applicantsInfo[0].done + "/" + tests[i].applicantsInfo[0].total;
             cell7.innerHTML = tests[i].average;
-            cell8.innerHTML = "<input type='button' value='상세정보' onclick=\"location.href='testdetail.html?" + tests[i].name + "'\"/>";
+            cell8.innerHTML = "<input type='button' value='상세정보' onclick=\"location.href='testdetail.jsp?name=" + tests[i].name + "'\"/>";
         }
 
         function delete_row() {
