@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        h2 {
+            color: #00b4ab;
+            text-align: center;
+        }
+
+        h3 {
+            color: black;
+            margin-left: 30px;
+        }
+
+        h4 {
+            color: gray;
+            margin-left: 50px;
+        }
+
+        #info,
+        #studentsinfo,
+        #backbtn {
+            padding: 15px;
+            border-radius: 5px;
+            display: table;
+            width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+        }
+
+        #testInfo,
+        #doneInfo,
+        #notdoneInfo {
+            text-align: center;
+        }
+
+        table {
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+
+        th,
+        td {
+            border: 1px solid gray;
+            padding: 5px;
+        }
+
+        .title {
+            font-weight: bold;
+            background-color: #DADADA;
+            width: 300px;
+            text-align: center;
+        }
+
+        .sub {
+            width: 250px;
+        }
+
+        .scoringbtn {
+            background: none;
+            border: none;
+            color: #00b4ab;
+        }
+
+        .btn {
+            background-color: #00b4ab;
+            border: 0px;
+            color: white;
+            width: 800px;
+            height: 40px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #q {
+            width: 400px;
+        }
+
+        #a {
+            width: 200px;
+        }
+
+        #sco,
+        #av {
+            width: 50px;
+        }
+
+        #wr {
+            width: 70px;
+        }
+    </style>
+</head>
+
+<body bgcolor=#ffffff>
+    <h2>응시생</h2>
+    <div>
+    <table id="doneInfo">
+        <script>
+            var Request = function () {
+                this.getParameter = function (name) {
+                    var rtnval = '';
+                    var nowAddress = unescape(location.href);
+                    var parameters = (nowAddress.slice(nowAddress.indexOf('?') + 1,
+                        nowAddress.length)).split('&');
+                    for (var i = 0; i < parameters.length; i++) {
+                        var varName = parameters[i].split('=')[0];
+                        if (varName.toUpperCase() == name.toUpperCase()) {
+                            rtnval = parameters[i].split('=')[1];
+                            break;
+                        }
+                    }
+                    return rtnval;
+                }
+            }
+            var t = '[{"name":"test1", "madeby":"Hong", "date":"19.05.12", "made_date": "19.04.11", "time": "12", "info":"12/50", "avg": "92",'
+                + '"student":[{"name" : "kk", "didit": "yes", "score": "92"}],'
+                + '"test_list":[{"test": "are you busy?", "answer": "yes", "score": "92", "student": [{"name": "kk", "answer": "yeap", "result": "O"}]}]' + '},'
+                + '{"name":"test2", "madeby":"Hong", "date":"19.04.12", "made_date": "19.02.01", "time": "11", "info":"23/50", "avg": "88",'
+                + '"student":[{"name" : "kk", "didit": "no", "score":"0"}],'
+                + '"test_list":[{"test": "nonononononononon?", "answer": "yes", "score": "77", "student": [{}]}]' + '}]';
+            var request = new Request();
+            var name =request.getParameter('name');
+            var test_name = request.getParameter('test');
+            var test_list = JSON.parse(t);
+            var i = 0;
+            for (i; i < Number(test_list.length); i++) {
+                if (name == test_list[i].name) break;
+            }
+            var test = test_list[i].test_list;
+            var j = 0;
+            for (j; j < Number(test.length); j++) {
+                if (test_name == test[j].test) break;
+            }
+            document.write("<table><thead><td class='title'>이름</td><td class = 'title'>작성 답안</td><td class='title'>결과</td></thead>");
+            var info = test[j].student;
+            for (k = 0; k < Number(info.length); k++) {
+                document.write("<th class='sub'>" + info[k].name + "</th>");
+                document.write("<th class='sub'>" + info[k].answer + "</th>");
+                document.write("<th class='sub'>" + info[k].result + "</th>");
+            }
+            document.write("</table>");
+        </script>
+        </div>
+</body>
+
+</html>
