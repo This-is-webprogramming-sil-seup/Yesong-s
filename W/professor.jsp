@@ -352,17 +352,17 @@ pageEncoding="utf-8"%>
                 return;
             }
 
-            location.href="professor.html?search="+s;
+            location.href="professor.jsp?name=<%=name%>&search="+s;
         }
 
         function sortAvg() {
-            location.href="professor.html?sortType=average";
+            location.href="professor.jsp?name=<%=name%>&sortType=average";
         }
         function sortDate() {
-            location.href="professor.html?sortType=madedate";
+            location.href="professor.jsp?name=<%=name%>&sortType=madedate";
         }
         function sortDuration() {
-            location.href="professor.html?sortType=testduration";
+            location.href="professor.jsp?name=<%=name%>&sortType=testduration";
         }
 
 
