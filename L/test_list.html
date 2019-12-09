@@ -16,18 +16,28 @@
 
 <body>
     <script>
-        var t = '[{"name":"test1", "madeby":"Hong", "date":"19.02.12~19.05.12", "time": "12", "info":"12/50", "avg": "92"},'
-        +'{"name":"test2", "madeby":"Hong", "date":"19.02.12~19.04.12", "time": "11", "info":"23/50", "avg": "88"}]';
+        var t = '[{"name":"test1", "madeby":"Hong", "date":"19.05.12", "made_date": "19.04.11", "time": "12", "info":"12/50", "avg": "92",'
+                    +'"student":[{"name" : "kk", "didit": "yes"}]'+'},'
+            + '{"name":"test2", "madeby":"Hong", "date":"19.04.12", "made_date": "19.02.01", "time": "11", "info":"23/50", "avg": "88",'
+                    +'"student":[{"name" : "kk", "didit": "no"}]'+'}]';
 
         var test_list = JSON.parse(t);
         var row = Number(test_list.length);
-        document.write("<button onclick=\'sortTable()\'>정렬</button>");
-        document.write("<form onsubmit=\"checkDelete();\"><table name = \'tab\'><tr><td></td><td>name</td><td>madeby</td><td>date</td><td>time</td><td>info</td><td>avg</td></tr>");
+        document.write("<button onclick=\'sortTableDate(1)\'>응시기간 오름차순</button>");
+        document.write("<button onclick=\'sortTableDate(2)\'>응시기간 내림차순</button>");
+        document.write("<button onclick=\'sortTableDate(1)\'>생성일시 오름차순</button>");
+        document.write("<button onclick=\'sortTableDate(2)\'>생성일시 내림차순</button>");
+        document.write("<form onsubmit=\"checkDelete();\"><table name = \'tab\'><tr><td></td><td>name</td><td>madeby</td><td>made date</td><td>date</td><td>time</td><td>info</td><td>avg</td></tr>");
         for (i = 0; i < row; i++) {
+            var test_student = test_list[i].student;
+            for(j=0;j<Number(test_student.length);j++){
+                
+            }
             document.write("<tr>");
             document.write("<td><input type=\"checkbox\" name=\"delete_list\" value=\"" + i + "\"></td>");
             document.write("<td>" + test_list[i].name + "</td>");
             document.write("<td>" + test_list[i].madeby + "</td>");
+            document.write("<td>" + test_list[i].made_date + "</td>");
             document.write("<td>" + test_list[i].date + "</td>");
             document.write("<td>" + test_list[i].time + "</td>");
             document.write("<td>" + test_list[i].info + "</td>");
@@ -49,31 +59,70 @@
                 }
             }
         }
-        function sortTable(){
+        function sortTable() {
             var table = document.getElementsByTagName('table');
             var rows = table[0].rows;
-            for(var i=1;i<(rows.length-1);i++){
-                for(var j=i;j<(rows.length-1);j++){
+            for (var i = 1; i < (rows.length - 1); i++) {
+                for (var j = i; j < (rows.length - 1); j++) {
                     var fCell = rows[j].cells[4];
-                    var sCell = rows[j+1].cells[4]; 
-                    if(Number(fCell.innerHTML) > Number(sCell.innerHTML)){
-                        rows[j].parentNode.insertBefore(rows[j+1], rows[j]);
+                    var sCell = rows[j + 1].cells[4];
+                    if (Number(fCell.innerHTML) > Number(sCell.innerHTML)) {
+                        rows[j].parentNode.insertBefore(rows[j + 1], rows[j]);
                     }
                 }
-            }   
+            }
         }
-        function searchProf(test_list, sub_string){
+        function sortTableDate(type) {
             var table = document.getElementsByTagName('table');
-            var rows = talbe[0].rows;
-            for(var i=table.rows.lenth-1;i>=1;i--){
-                table.deleteRow(i);
-            }
-            for(var i=0;i<Number(test_list.length)){
+            var rows = table[0].rows;
+            for (var i = 1; i < (rows.length - 1); i++) {
+                for (var j = i; j < (rows.length - 1); j++) {
+                    var fCell = rows[j].cells[4];
+                    var sCell = rows[j + 1].cells[4];
+                    if (type == 1) {
+                        if (fCell.innerHTML > sCell.innerHTML) {
+                            rows[j].parentNode.insertBefore(rows[j + 1], rows[j]);
+                        }
+                    } else {
+                        if(fCell.innerHTML < sCell.innerHTML){
+                            rows[j].parentNode.insertBefore(rows[j+1], rows[j]);
+                        }
+                    }
 
+                }
             }
         }
-    </script>
+        function sortTableMadeDate(type){
+            var table = document.getElementsByTagName('table');
+            var rows = table[0].rows;
+            for (var i = 1; i < (rows.length - 1); i++) {
+                for (var j = i; j < (rows.length - 1); j++) {
+                    var fCell = rows[j].cells[3];
+                    var sCell = rows[j + 1].cells[3];
+                    if (type == 1) {
+                        if (fCell.innerHTML > sCell.innerHTML) {
+                            rows[j].parentNode.insertBefore(rows[j + 1], rows[j]);
+                        }
+                    } else {
+                        if(fCell.innerHTML < sCell.innerHTML){
+                            rows[j].parentNode.insertBefore(rows[j+1], rows[j]);
+                        }
+                    }
 
+                }
+            }
+        }
+        // function searchProf(test_list){
+        //     var table = document.getElementsByTagName('table');
+        //     var rows = talbe[0].rows;
+        //     for(var i=table.rows.lenth-1;i>=1;i--){
+        //         table.deleteRow(i);
+        //     }
+        //     for(var i=0;i<Number(test_list.length)){
+
+        //     }
+        // }
+    </script>
 </body>
 
 </html>

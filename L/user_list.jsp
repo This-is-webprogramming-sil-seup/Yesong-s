@@ -25,7 +25,7 @@ pageEncoding="utf-8"%>
         var s = '[';
         window.alert("HI");
         <%
-            Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
         String query = "SELECT * FROM user_data;";
         Statement stmt = conn.createStatement();
