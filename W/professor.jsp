@@ -178,9 +178,9 @@ pageEncoding="utf-8"%>
     <br>
     <div id="sortingbtn">
         <br>
-        <input type="button" id="sortbyDate" class="btn" value="생성일로 정렬" onclick="sortbyDate()">
-        <input type="button" id="sortbyDuration" class="btn" value="응시기간으로 정렬" onclick="sortbyDuration()">
-        <input type="button" id="sortbyAvg" class="btn" value="평균으로 정렬" onclick="sortbyAvg()">
+        <input type="button" id="sortbyDate" class="btn" value="생성일로 정렬" onclick="sortDate()">
+        <input type="button" id="sortbyDuration" class="btn" value="응시기간으로 정렬" onclick="sortDuration()">
+        <input type="button" id="sortbyAvg" class="btn" value="평균으로 정렬" onclick="sortAvg()">
         <br><br>
     </div>
 
@@ -209,8 +209,33 @@ pageEncoding="utf-8"%>
         var tests = eval("(" + s + ")");
         var length = Object.keys(tests).length;
         function init() {
-            for (var i = 0; i < length; i++) {
-                add_row(i, tests);
+            var search = get_search();
+            var sorttype = get_type();
+
+            console.log(search);
+            console.log(sorttype);
+            if(search == null && sorttype == null){
+                for (var i = 0; i < length; i++) {
+                    add_row(i, tests);
+                }
+            }
+            else if(search != null && sorttype == null){
+                for (var i = 0; i < length; i++) {
+                    if (tests[i].name == search) {
+                        add_row(i, tests);
+                    }
+                }
+            }
+            else if(search == null && sorttype != null){
+                if(sorttype == "average"){
+                    sortbyAvg();
+                }
+                else if(sorttype == "madedate"){
+                    sortbyDate();
+                }
+                else if(sorttype == "testduration"){
+                    sortbyDuration();
+                }
             }
         }
 
@@ -234,6 +259,18 @@ pageEncoding="utf-8"%>
             cell6.innerHTML = tests[i].applicantsInfo[0].done + "/" + tests[i].applicantsInfo[0].total;
             cell7.innerHTML = tests[i].average;
             cell8.innerHTML = "<input type='button' value='상세정보' id='detailbtn' onclick=\"location.href='testdetail.html?" + tests[i].name + "'\"/>";
+        }
+
+        function get_search(){
+            var temp = decodeURI(location.href).split("search=");
+            var search = temp[1];
+            return search;
+        }
+
+        function get_type(){
+            var temp = decodeURI(location.href).split("sortType=");
+            var type = temp[1];
+            return type;
         }
 
         function delete_row() {
@@ -270,9 +307,6 @@ pageEncoding="utf-8"%>
             var index = sortwithIndex(array);
 
             var table = document.getElementById('info_table');
-            for (var i = 0; i < table.rows.length - 1; i) {
-                table.deleteRow(i + 1);
-            }
 
             for (var i = 0; i < length; i++) {
 
@@ -288,9 +322,6 @@ pageEncoding="utf-8"%>
             var index = sortwithIndex(array);
 
             var table = document.getElementById('info_table');
-            for (var i = 0; i < table.rows.length - 1; i) {
-                table.deleteRow(i + 1);
-            }
 
             for (var i = 0; i < length; i++) {
 
@@ -306,9 +337,6 @@ pageEncoding="utf-8"%>
             var index = sortwithIndex(array);
 
             var table = document.getElementById('info_table');
-            for (var i = 0; i < table.rows.length - 1; i) {
-                table.deleteRow(i + 1);
-            }
 
             for (var i = 0; i < length; i++) {
 
@@ -324,17 +352,17 @@ pageEncoding="utf-8"%>
                 return;
             }
 
-            var table = document.getElementById('info_table');
-            for (var i = 1; i < table.rows.length; i) {
-                table.deleteRow(i);
-            }
+            location.href="professor.html?search="+s;
+        }
 
-            for (var i = 0; i < length; i++) {
-                if (tests[i].name == s) {
-                    add_row(i, tests);
-                }
-            }
-
+        function sortAvg() {
+            location.href="professor.html?sortType=average";
+        }
+        function sortDate() {
+            location.href="professor.html?sortType=madedate";
+        }
+        function sortDuration() {
+            location.href="professor.html?sortType=testduration";
         }
 
 
