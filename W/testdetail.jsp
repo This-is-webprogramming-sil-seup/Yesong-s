@@ -220,7 +220,6 @@ pageEncoding="utf-8"%>
 
         //s=s.substr(0,s.length-1);
         //s+="]";
-        window.alert(s);
 
         var tests = eval("(" + s + ")");
         var length = Object.keys(tests).length;

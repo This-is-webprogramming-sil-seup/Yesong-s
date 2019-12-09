@@ -169,7 +169,7 @@ pageEncoding="utf-8"%>
     <% String name=request.getParameter("name");%>
     <div id="DBchange">
         <br>
-        <input type="button" id="create" class="btn" value="시험생성" onclick="location.href='create.html'">
+        <input type="button" id="create" class="btn" value="시험생성" onclick="location.href='create.jsp?name=<%=name%>'">
         <input type="button" id="delete" class="btn" value="삭제" onclick="delete_row()">
         <input type="button" id="copy" class="btn" value="복사" onclick="copy_row()">
         <br><br>
@@ -233,7 +233,7 @@ pageEncoding="utf-8"%>
             cell5.innerHTML = tests[i].time;
             cell6.innerHTML = tests[i].applicantsInfo[0].done + "/" + tests[i].applicantsInfo[0].total;
             cell7.innerHTML = tests[i].average;
-            cell8.innerHTML = "<input type='button' value='상세정보' id='detailbtn' onclick=\"location.href='testdetail.html?" + tests[i].name + "'\"/>";
+            cell8.innerHTML = "<input type='button' value='상세정보' id='detailbtn' onclick=\"location.href='testdetail.jsp?name=" + tests[i].name + "'\"/>";
         }
 
         function delete_row() {
