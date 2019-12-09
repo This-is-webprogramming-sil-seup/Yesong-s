@@ -130,7 +130,7 @@ pageEncoding="utf-8"%>
 
   </script>
 
-  <form method="POST" action="">
+  <form method="POST">
       <table style="margin: 0 auto;">
       <tr style="background-color:white;"><td style="width:500px; border-radius:5px;">
       <br>
