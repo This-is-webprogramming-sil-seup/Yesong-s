@@ -161,8 +161,6 @@
             var answers = eval("("+ans+")");
             var length = Object.keys(tests).length;
             var i = getTestNum();
-            //var testname = getTestName().split("&")[0].substring(5,);
-            //var stuname = getTestName().split("&")[1].substring(3,);
             
             function complete(){
                 location.href="testdetail.jsp?name="+testname;
@@ -222,14 +220,14 @@
 
             function getTestName(){
                 var temp = decodeURI(location.href).split("?");
-                var testName = temp[1];
-                return testName;
+                temp=temp[1].split("&")[0].substring(5,);
+                return temp;
             }
 
             function getStuName(){
                 var temp = decodeURI(location.href).split("?");
-                var tmp = temp[2];
-                return tmp;
+                temp=temp[1].split("&")[1].substring(3,);
+                return temp;
             }
 
             function getTestNum(name){
@@ -246,28 +244,21 @@
                 var mult = document.getElementById('multiple');
                 console.log(document.getElementsByTagName("tr"));
                 for (k; k < mult.rows.length; k++) {
-                    console.log(k);
                     if (document.getElementsByTagName("tr")[k].cells[4].firstChild.firstChild.checked) {
                         var tmp = document.getElementsByTagName("tr")[k].cells[3].firstChild.firstChild.nodeValue;
                         var point = parseInt(tmp);
                         score += point;
                     }
                 }
-                console.log("염병");
                 k++;
-                var tmp=k;
-
                 var short = document.getElementById('short');
                 for (k; k < mult.rows.length+short.rows.length; k++) {
-                    console.log(k);
                     if (document.getElementsByTagName("tr")[k].cells[4].firstChild.firstChild.checked) {
                         var tmp = document.getElementsByTagName("tr")[k].cells[3].firstChild.firstChild.nodeValue;
                         var point = parseInt(tmp);
                         score += point;
                     }
                 }
-
-                
                 var p = document.getElementById("score");
                 p.innerHTML = "점수 : "+score;
             }
