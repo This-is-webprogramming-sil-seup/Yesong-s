@@ -58,7 +58,7 @@ pageEncoding="utf-8"%>
         s+='{"name": "<%=rs.getString("test_name")%>",';
         s+='"make":"<%=rs.getString("Birthday")%>",';
         s+='"duration": "<%=rs.getString("test_start_period")%>~<%=rs.getString("test_end_period")%>"';
-        s+=',"time": "<%=rs.getString("test_name")%>",';
+        s+=',"time": "<%=rs.getString("test_start_time")%>",';
         s+='"auto": "false",';
         s+='"applicantsInfo": [{"done":10,"total":30,"list":[{}]}],';
         s+='"average": 78,},';
@@ -93,7 +93,7 @@ pageEncoding="utf-8"%>
             cell5.innerHTML = tests[i].time;
             cell6.innerHTML = tests[i].applicantsInfo[0].done + "/" + tests[i].applicantsInfo[0].total;
             cell7.innerHTML = tests[i].average;
-            cell8.innerHTML = "<input type='button' value='상세정보' onclick=\"location.href='testdetail.html?" + tests[i].name + "'\"/>";
+            cell8.innerHTML = "<input type='button' value='상세정보' onclick=\"location.href='testdetail.jsp?name=" + tests[i].name + "'\"/>";
         }
 
         function delete_row() {
