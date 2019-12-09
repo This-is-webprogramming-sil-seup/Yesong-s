@@ -342,6 +342,11 @@ pageEncoding="utf-8"%>
                 stuOK = false;
             }
 
+            if(cnt==0){
+                alert("문제를 생성해주세요");
+                return;
+            }
+
             if (essential && sOK && mOK && stuOK) {
                 //디비 저장
                 window.history.back();
