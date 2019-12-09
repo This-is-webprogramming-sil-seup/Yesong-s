@@ -118,7 +118,7 @@ pageEncoding="utf-8"%>
 
             var tests = eval("(" + s + ")");
             var length = Object.keys(tests).length;
-            var name = <%=name%>;
+            var name = "<%=name%>";
             var i = getTestNum(name);
 
             function init(){
