@@ -25,7 +25,7 @@ pageEncoding="utf-8"%>
         <input type="button" id="shortAnswer" value="short" onclick="makeShortAnswer()">
         <input type="button" id="multipleChoice" value="choice" onclick="makeMultiple()">
 
-        <div id="questionList"></div>
+        <div id="questionList" name="List"></div>
 
         <input type="submit" value="저장" onclick="save()">
     </form>
@@ -39,14 +39,18 @@ pageEncoding="utf-8"%>
             cnt += 1;
             var body = document.getElementById("questionList");
             body.innerHTML += cnt + "번<br>";
-            body.innerHTML += "<div>문제 : " + "<input type='text' id='question'><br>답  : " + "<input type='text' id='answer'><br>배점 : " + "<input type='text' id='score'><br><br></div>";
+            //body.innerHTML += "<div>문제 : " + "<input type='text' id='question'><br>답  : " + "<input type='text' id='answer'><br>배점 : " + "<input type='text' id='score'><br><br></div>";
+            body.innerHTML += "<div>문제 : " + "<input type='text' id='question' name='question'"+cnt+"><br>답  : " + "<input type='text' id='answer' name='answer'"+cnt+"><br>배점 : " + "<input type='text' id='score' name='score'"+cnt+"><br><br></div>";
         }
 
         function makeMultiple() {
             cnt += 1;
             var body = document.getElementById("questionList");
             body.innerHTML += cnt + "번<br>";
-            body.innerHTML += "<div>문제 : " + "<input type='text' id='question'><br>보기개수 : <select id='exNum' name='exampleNum'><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select><br>보기<br>1번:<input type='text' id='num1'><br>2번:<input type='text' id='num2'><br>3번:<input type='text' id='num3'><br>4번:<input type='text' id='num4'><br>5번:<input type='text' id='num5'><br>답  : " + "<input type='text' id='answer'><br>배점 : " + "<input type='text' id='score'><br><br></div>";
+            //body.innerHTML += "<div>문제 : " + "<input type='text' id='question'><br>보기개수 : <select id='exNum' name='exampleNum'><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select><br>보기<br>1번:<input type='text' id='num1'><br>2번:<input type='text' id='num2'><br>3번:<input type='text' id='num3'><br>4번:<input type='text' id='num4'><br>5번:<input type='text' id='num5'><br>답  : " + "<input type='text' id='answer'><br>배점 : " + "<input type='text' id='score'><br><br></div>";
+            body.innerHTML += "<div>문제 : " 
+            + "<input type='text' id='question' name='question'"+cnt+"><br>보기개수  : <select id='exNum' name='exampleNum'><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select><br>보기<br>1번:<input type='text' id='num1' name='num'"+cnt+"_1><br>2번:<input type='text' id='num2 'name='num'"+cnt+"_2><br>3번:<input type='text' id='num3' name='num'"+cnt+"_3><br>4번:<input type='text' id='num4' name='num'"+cnt+"_4><br>5번:<input type='text' id='num5' name='num'"+cnt+"_5><br>답  : " 
+            + "<input type='text' id='answer' name='answer'"+cnt+"><br>배점 : " + "<input type='text' id='score' name='score'"+cnt+"><br><br></div>";
         }
 
 

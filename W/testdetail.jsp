@@ -193,13 +193,29 @@ pageEncoding="utf-8"%>
 
 
             s+='{"name": "<%=rs.getString("test_name")%>",';
-        //s+='"make":"<%=rs.getString("Birthday")%>",';
-        s += '"duration": "<%=rs.getString("test_start_period")%>~<%=rs.getString("test_end_period")%>"';
-        s += ',"time": "<%=rs.getString("test_start_time")%>",';
-        s += '"auto": "false",';
-        s += '"applicantsInfo": [{"done":10,"total":30,';//"list":[{}]}],';
-        //s+='"average": 78}';
-        s += '"list":[{"done":[{"id":"ga","name":"가","score":100},{"id":"na","name":"나","score":90}],"notDone":[{"id":"da","name":"다","score":0},{"id":"ra","name":"라","score":0},{"id":"ma","name":"마","score":0}]}]}],"average": 78,"shortAnswer":[{"question":"내 기분을 맞춰봐!","answer":"하기싫다","points":50,"average":50,"wrongrate":0},{"question":"하기 싫을 땐 어떻게 해야하지","answer":"때려치면된다","points":40,"average":25,"wrongrate":50}],"multipleChoice":[{"question":"가장 급한 과제는?","exampleNum":5,"examples":[{"보기":"컴네"},{"보기":"컴비"},{"보기":"웹프실"},{"보기":"오토마타 공부"},{"보기":"휴학"}],"answer":"5","points":10,"average":50,"wrongrate":0}]},{"name": "하기 싫다","make":"2019-12-07","duration": 3,"time": 1,"auto": "true","applicantsInfo": [{"done":0,"total":41,"list":[{}]}],"average": 0,"shortAnswer":[],"multipleChoice":[{"question":"집에 가고 싶다","exampleNum":4,"examples":[{"보기":"살려줘"},{"보기":"배고파"},{"보기":"밥먹고 싶다"},{"보기":"힝힝"}],"answer":"1","points":10,"average":10,"wrongrate":0},{"question":"아랫분도 이미 동의하신 내용","exampleNum":5,"examples":[{"보기":"ㅇㅇ"},{"보기":"ㄴㄴ"},{"보기":"ㄷㄷ"},{"보기":"ㄹㅇ"},{"보기":"ㅇㅎ"}],"answer":"4","points":50,"average":25,"wrongrate":50}]}]';
+
+            //s+='"make":"<%=rs.getString("Birthday")%>",';
+            s+='"duration": "<%=rs.getString("test_start_period")%>~<%=rs.getString("test_end_period")%>"';
+            s+=',"time": "<%=rs.getString("test_start_time")%>",';
+            s+='"auto": "false",';
+            s+='"applicantsInfo": [{"done":10,"total":30,';//"list":[{}]}],';
+            //s+='"average": 78}';
+            s+='"list":[{"done":[{"id":"ga","name":"가","score":100},{"id":"na","name":"나","score":90}],"notDone":[{"id":"da","name":"다","score":0},{"id":"ra","name":"라","score":0},{"id":"ma","name":"마","score":0}]}]}],"average": 78,"shortAnswer":[{"question":"내 기분을 맞춰봐!","answer":"하기싫다","points":50,"average":50,"wrongrate":0},{"question":"하기 싫을 땐 어떻게 해야하지","answer":"때려치면된다","points":40,"average":25,"wrongrate":50}],"multipleChoice":[{"question":"가장 급한 과제는?","exampleNum":5,"examples":[{"보기":"컴네"},{"보기":"컴비"},{"보기":"웹프실"},{"보기":"오토마타 공부"},{"보기":"휴학"}],"answer":"5","points":10,"average":50,"wrongrate":0}]},{"name": "하기 싫다","make":"2019-12-07","duration": 3,"time": 1,"auto": "true","applicantsInfo": [{"done":0,"total":41,"list":[{}]}],"average": 0,"shortAnswer":[],"multipleChoice":[{"question":"집에 가고 싶다","exampleNum":4,"examples":[{"보기":"살려줘"},{"보기":"배고파"},{"보기":"밥먹고 싶다"},{"보기":"힝힝"}],"answer":"1","points":10,"average":10,"wrongrate":0},{"question":"아랫분도 이미 동의하신 내용","exampleNum":5,"examples":[{"보기":"ㅇㅇ"},{"보기":"ㄴㄴ"},{"보기":"ㄷㄷ"},{"보기":"ㄹㅇ"},{"보기":"ㅇㅎ"}],"answer":"4","points":50,"average":25,"wrongrate":50}]}]';
+            
+            
+            //s=s.substr(0,s.length-1);
+            //s+="]";
+            
+            var tests = eval("(" + s + ")");
+            var length = Object.keys(tests).length;
+            var name = "<%=name%>";
+            var i = getTestNum(name);
+
+            function init(){
+                showBasicInfo(i);
+                showQuestion(i);
+                showStudents(i);
+            }
 
 
         //s=s.substr(0,s.length-1);
