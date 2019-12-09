@@ -1,22 +1,55 @@
 <!DOCTYPE html>
-<meta charset="UTF-8"/>
 <html>
   <head>
   <style>
-    table {
-        width: 100%;
-        border: 1px solid #444444;
-        border-collapse: collapse;
+    body { background-color: #DADADA; text-align: center;}
+    #back_btn {
+      width: 80px;
+      height: 32px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      float: right;
     }
-    th,
-    td {
-        border: 1px solid #444444;
+    #table_test, th, td {
+      margin:20px;
+    }
+    #table_test td {
+      text-align:left;
+    }
+    #result_inner {
+      margin: 0 auto;
+      text-align: left;
+      border:2px solid #acacac;
+      border-collapse: collapse;
+    }
+    #result_inner th {
+      width: 70px;
+      text-align: center;
+      background-color: #e9e9e9;
+      border: 1px solid #acacac;
+      color: #2c2c2c;
+      padding: 10px;
+    }
+    #result_inner td {
+      border: 1px dotted #acacac;
+      height: 25px;
     }
     </style>
   </head>
   <body>
-    <form method="POST" action=""> <input type ="button" value="뒤로 가기" onclick="goback()" /> </form>
-    <br>
+    <h1 style="text-align: center; font-weight:bold; color: #00b4ab;"> 시험 결과 </h1>
+    <form method="POST" action=""> <input type ="button" id="back_btn" value="뒤로 가기" onclick="goback()" /> </form>
+    <br><br><br>
+    <table style="margin: 0 auto; width:500px; height:20px; border:2px solid #acacac;">
+      <tr style="background-color:white;"><td style="width:500px; font-size:12px;"><br>
+      <a style="font-weight:bold; color:blue;">파란색</a>은 본인이 선택한 보기를, <a style="font-weight:bold; color:red;">빨간색</a>은 답을 의미합니다.<br><br>
+    </td></tr></table>
+    <br><br>
     <script>
         function goback() {
             location.href = "user_main.html";
@@ -28,59 +61,68 @@
             + '{"num":"5", "question": "마는 무엇일까요?", "your_ans":"ex1", "ex1":"보기1번", "ex2":"보기2번", "ex3":"보기3번", "ex4":"보기4번", "ex5":"보기5번", "ans":"ex1", "grade": "20"}]';
         var test_info = JSON.parse(s);
         var row = Number(test_info.length);
-        document.write("<table><tr></tr>");
+        document.write("<table style=\"margin:0 auto; width: 850px;\"><tr style=\"background-color:white;\"><td style=\"width:500px; border-radius:5px;\">");
+        document.write("<table id=\"table_test\"><tr></tr>");
         for (i = 0; i < row; i++) {
-            document.write("<tr><td>" + test_info[i].num.big().bold() + ". " + test_info[i].question.big().bold() + " (" + test_info[i].grade + ")" + " [" + test_info[i].your_ans.split("ex")[1].fontcolor("blue").bold() + "] " + "</td></tr>");
+            document.write("<tr><td>" + test_info[i].num.big().bold() + ". " + test_info[i].question.big().bold() + " (" + test_info[i].grade + ")" + "&nbsp" + " [" + test_info[i].your_ans.split("ex")[1].fontcolor("blue").bold() + "] " + "</td></tr>");
             if (test_info[i].ans == 'ex1') {
-                document.write("<tr><td>" + "1) " + test_info[i].ex1.fontcolor("red").bold() + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "① " + test_info[i].ex1.fontcolor("red").bold() + "</td></tr>");
             }
             else if (test_info[i].ans != 'ex1') {
-                document.write("<tr><td>" + "1) " + test_info[i].ex1 + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "① " + test_info[i].ex1 + "</td></tr>");
             }
             if (test_info[i].ans == 'ex2') {
-                document.write("<tr><td>" + "2) " + test_info[i].ex2.fontcolor("red").bold() + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "② " + test_info[i].ex2.fontcolor("red").bold() + "</td></tr>");
             }
             else if (test_info[i].ans != 'ex2') {
-                document.write("<tr><td>" + "2) " + test_info[i].ex2 + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "② " + test_info[i].ex2 + "</td></tr>");
             }
             if (test_info[i].ans == 'ex3') {
-                document.write("<tr><td>" + "3) " + test_info[i].ex3.fontcolor("red").bold() + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "③ " + test_info[i].ex3.fontcolor("red").bold() + "</td></tr>");
             }
             else if (test_info[i].ans != 'ex3') {
-                document.write("<tr><td>" + "3) " + test_info[i].ex3 + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "③ " + test_info[i].ex3 + "</td></tr>");
             }
             if (test_info[i].ans == 'ex4') {
-                document.write("<tr><td>" + "4) " + test_info[i].ex4.fontcolor("red").bold() + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "④ " + test_info[i].ex4.fontcolor("red").bold() + "</td></tr>");
             }
             else if (test_info[i].ans != 'ex4') {
-                document.write("<tr><td>" + "4) " + test_info[i].ex4 + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "④ " + test_info[i].ex4 + "</td></tr>");
             }
             if (test_info[i].ans == 'ex5') {
-                document.write("<tr><td>" + "5) " + test_info[i].ex5.fontcolor("red").bold() + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "⑤ " + test_info[i].ex5.fontcolor("red").bold() + "</td></tr>");
             }
             else if (test_info[i].ans != 'ex5') {
-                document.write("<tr><td>" + "5) " + test_info[i].ex5 + "</td></tr>");
+                document.write("<tr><td>" + "&nbsp&nbsp&nbsp&nbsp&nbsp" + "⑤ " + test_info[i].ex5 + "</td></tr>");
             }
             document.write("<tr><td><br></td></tr>");
         }
         document.write("</table>");
+        document.write("</td></tr></table>");
+
         
         var sum = 0;
-        
-        document.write("<table></td><td>번호</td><td>결과</td><td>배점</tr>");
+        document.write("<br>");
+        document.write("<h1 style=\"text-align: center; font-weight:bold; color: #00b4ab;\"> 결과 </h1>");
+        document.write("<table style=\"margin:0 auto; width: 850px;\"><tr style=\"background-color:white;\"><td style=\"width:500px; border-radius:5px;\">");
+        document.write("<br><br>");
+        document.write("<table id=\"result_inner\"><tr><th>번호</th><th>결과</th><th>배점</th></tr>");
         for (i = 0; i < row; i++) {
-            document.write("<tr><td>" + test_info[i].num + "</td>");
+            document.write("<tr><td>" + "&nbsp" + test_info[i].num + "</td>");
             if (test_info[i].ans == test_info[i].your_ans) {
-                document.write("<td>" + "O" + "</td>");
+                document.write("<td>" + "&nbsp" + "O" + "</td>");
                 sum += Number(test_info[i].grade);
             }
             else if (test_info[i].ans != test_info[i].your_ans) {
-                document.write("<td>" + "X" + "</td>");
+                document.write("<td>" + "&nbsp" + "X" + "</td>");
             }
-            document.write("<td>" + test_info[i].grade + "</td></tr>");
+            document.write("<td>" + "&nbsp" + test_info[i].grade + "</td></tr>");
         }
-        document.write("<tr><td colspan=\"2\">점수</td><td>" + sum + "</td></tr>");
+        document.write("<tr><td colspan=\"2\"><b>점수</b></td><td>" + "&nbsp" + "<a style=\"font-weight:bold; color:red;\">" + sum + "</a></td></tr>");
         document.write("</table>");
+        document.write("<br><br><a style=\"font-weight:bold; font-size:20px; color:blue;\">" + "수고하셨습니다!</a><br><br>");
+        document.write("</td></tr></table>");
+        document.write("<br><br>");
     </script>
   </body>
 </html>

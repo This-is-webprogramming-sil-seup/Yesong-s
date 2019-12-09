@@ -127,7 +127,8 @@ pageEncoding="utf-8"%>
     }
   </script>
 
-  <form method="POST" action="">
+
+  <form method="POST">
       <table style="margin: 0 auto;">
       <tr style="background-color:white;"><td style="width:500px; border-radius:5px;">
       <br>
@@ -135,6 +136,7 @@ pageEncoding="utf-8"%>
       <label><input type="password" id="loginPW" placeholder="비밀번호" /></label><br>
       <input type="checkbox" id="remain"/><a style="font-size:12px; font-weight:bold; color: gray;">아이디 저장</a>
       <br><input class="login_btn" type ="submit" value="로그인" onclick="login();return false" /> <br>
+
       <br><br>
       </td></tr>
       </table>

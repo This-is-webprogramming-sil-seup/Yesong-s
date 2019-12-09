@@ -1,30 +1,77 @@
 <!DOCTYPE html>
-<meta charset="UTF-8"/>
 <html>
   <head>
   <style>
+    body { background-color: #DADADA; text-align: center;}
+    #category_id {
+      border: 1.5px solid gray;
+      width:150px;
+      height:32px; 
+    }
+    #search {
+      border: 1.5px solid gray;
+      width:350px;
+      height:27px;
+    }
+    #search_btn {
+      width: 70px;
+      height: 32px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    #sort_btn {
+      width: 70px;
+      height: 32px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center; 
+    }
     table {
-        width: 100%;
-        border: 1px solid #444444;
+        margin: 0 auto;
+        border: none;
         border-collapse: collapse;
+        font-size: 13px;
     }
-    th,
-    td {
-        border: 1px solid #444444;
+    #inner {
+      text-align: left;
+      border: 1px solid #acacac;
     }
+    #inner th {
+      text-align: center;
+      background-color: #e9e9e9;
+      border: 1px solid #acacac;
+      color: #2c2c2c;
+      padding: 10px;
+    }
+    #inner td {
+      border: 1px solid #acacac;
+      height: 25px;
+    }
+    #did_id { color:#2c2c2c; }
+    #did_id:hover { color:red; }
+    #will_id { color:#2c2c2c; }
+    #will_id:hover { color:red; }
     </style>
   </head>
   <body>
-    <h1> 시험 목록 </h1>
+    <h1 style="text-align: center; font-weight:bold; color: #00b4ab;"> 시험 목록 </h1>
     <form method="POST" action="">
-      <select name="category">
+      <select name="category" id="category_id">
         <option value="done" selected>응시/미응시여부</option>
         <option value="test_name">시험명</option>
         <option value="prof_name">교수자명</option>
-      </select>
-      <input type="text" id="search" />
-      <input type ="button" value="검색" onclick="search()" />
-      <input type ="button" value="정렬" onclick="sort()" />
+      </select> &nbsp
+      <input type="text" id="search" placeholder="&nbsp이름" />&nbsp
+      <input type ="button" id="search_btn" value="검색" onclick="search()" />&nbsp
+      <input type ="button" id="sort_btn" value="정렬" onclick="sort()" />
     </form>
     <br>
     <script>
@@ -34,24 +81,28 @@
             + '{"name":"Music", "id": "Ha", "sub_date":"19.08.11 ~ 19.09.11", "done": "O", "grade": "100", "total":"100"}]';
         var test_list = JSON.parse(s);
         var row = Number(test_list.length);
-        document.write("<table></td><td>시험명</td><td>생성자명</td><td>응시기간</td><td>응시여부</td><td>성적</td><td>총배점</td></tr>");
+        document.write("<table style=\"width: 800px;\"><tr style=\"background-color:white;\"><td style=\"width:500px; border-radius:5px;\">");
+        document.write("<table id=\"inner\"><tr><th style=\"width:70px;\">시험명</th><th style=\"width:70px;\">생성자명</th><th style=\"width:170px;\">응시기간</th><th style=\"width:70px;\">응시여부</th><th style=\"width:60px;\">성적</th><th style=\"width:60px;\">총배점</th></tr>");
+        document.write("<br>");
         for (i = 0; i < row; i++) {
             var id = test_list[i].name;
             document.write("<tr>");
             if (test_list[i].done == 'O') {
-                document.write("<td><a href = \"didtest.html\" + >"+test_list[i].name+"</a></td>");
+                document.write("<td>" + "&nbsp" + "<a id=\"did_id\" href = \"didtest.html\" + >" + test_list[i].name+"</a></td>");
             }
             else if (test_list[i].done == 'X') {
-                document.write("<td><a href = \"willtest.html\" + >"+test_list[i].name+"</a></td>");
+                document.write("<td>" + "&nbsp" + "<a id=\"will_id\" href = \"willtest.html\" + >"+ test_list[i].name+"</a></td>");
             }
-            document.write("<td>" + test_list[i].id + "</td>");
-            document.write("<td>" + test_list[i].sub_date + "</td>");
-            document.write("<td>" + test_list[i].done);
-            document.write("<td>" + test_list[i].grade);        
-            document.write("<td>" + test_list[i].total);         
+            document.write("<td>" + "&nbsp" + test_list[i].id + "</td>");
+            document.write("<td>" + "&nbsp" + test_list[i].sub_date + "</td>");
+            document.write("<td>" + "&nbsp" + test_list[i].done);
+            document.write("<td>" + "&nbsp" + test_list[i].grade);        
+            document.write("<td>" + "&nbsp" + test_list[i].total);         
             document.write("</td></tr>");
         }
         document.write("</table>");
+        document.write("<br>");
+        document.write("</td></tr></table>");
         function search() {
         
         }
