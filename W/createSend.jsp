@@ -22,7 +22,6 @@ String to = transFormat.format(from);
 
 Statement stmt = conn.createStatement();
 ResultSet rs=stmt.executeQuery("SELECT * FROM test_data");
-
 rs.last();
 int a=rs.getRow();
 
@@ -41,6 +40,6 @@ stmt.close();
 conn.close();
 %>
 <html>
-<meta http-equiv="refresh" content="0;URL='professor.jsp'">
+<meta http-equiv="refresh" content="5;URL='professor.jsp'">
 
 </html>
