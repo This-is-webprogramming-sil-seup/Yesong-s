@@ -9,6 +9,38 @@ pageEncoding="utf-8"%>
 <html>
 
 <head>
+<style>
+    body { background-color: #DADADA; text-align: center; }
+    .login_btn {
+      width: 450px;
+      height: 45px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    #loginID {
+      width: 450px;
+      height: 30px;
+      color: gray;
+    }
+    #loginPW {
+      width: 450px;
+      height: 30px;
+      color: gray;
+      margin-top: 10px;
+    }
+    #remain {
+      color: #00b4ab;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+    #here:hover {
+      color: red;
+    }
+</style>
 </head>
 
 <body>
@@ -28,6 +60,7 @@ pageEncoding="utf-8"%>
         grades.add(rs.getString("user_grade"));
       }
     %>
+  <h1 style="font-weight:bold; color: #00b4ab;"> 로그인 페이지 </h1>
   <p><span id="UserInfo"></span></p>
   <script>
     function setCookie(name, value, expiredays) { //쿠키 저장함수
@@ -97,15 +130,22 @@ pageEncoding="utf-8"%>
 
   </script>
 
-  <form method="POST">
-    <label>아이디<br><input type="text" id="loginID" /></label><br>
-    <label>비밀번호<br><input type="password" id="loginPW" /></label>
-    &nbsp<input type="submit" value="로그인" onclick="login(); return false" />
-    <br><input type="checkbox" id="remain" />아이디 저장
+  <form method="POST" action="">
+      <table style="margin: 0 auto;">
+      <tr style="background-color:white;"><td style="width:500px; border-radius:5px;">
+      <br>
+      <label><input type="text" id="loginID" placeholder="아이디" /></label><br>
+      <label><input type="password" id="loginPW" placeholder="비밀번호" /></label><br>
+      <input type="checkbox" id="remain"/><a style="font-size:12px; font-weight:bold; color: gray;">아이디 저장</a>
+      <br><input class="login_btn" type ="submit" value="로그인" onclick="login()" /> <br>
+      <br><br>
+      </td></tr>
+      </table>
   </form>
-
-  <br><a href="register.jsp"> 회원가입 </a>
-
+   <table style="margin: 0 auto; margin-top:10px;">
+   <tr style="background-color:white;"><td style="width:483px; border-radius:5px; padding:10px; font-size:13px;">
+   로그인 할 계정이 없다면 <a id="here" href="register.html"> 여기</a>를 눌러주세요.
+   </td></tr>
+   </table>
 </body>
-
 </html>
