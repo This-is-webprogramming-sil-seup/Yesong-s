@@ -150,7 +150,7 @@ pageEncoding="utf-8"%>
     }
   </script>
   <form action="registerCheck.jsp" method="post">
-  <table style="margin: 0 auto;">
+  <table style="text-align: center; margin: 0 auto;">
       <tr style="background-color:white;"><td style="width:500px; border-radius:5px;">
       <label> <input type="text" id="registerName" placeholder="이름"/></label><br>
       <label> <input type="text" id="registerID" placeholder="아이디" />
