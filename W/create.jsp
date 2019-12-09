@@ -112,15 +112,15 @@ pageEncoding="utf-8"%>
 
 <body onload="init()">
     <% String name=request.getParameter("name");%>
-    <div id="createform">
+    <form name="frm" id="createform" action="createSend.jsp?name=<%=name%>" method="post">
         <h3>시험 정보</h3>
         <div id="testinfo">
-            시 험 명&nbsp;&nbsp;: <input type="text" id="name" required><br>
-            응시기간 : <input type="date" id="date1"> ~ <input type="date" id="date2" required><br>
-            응시시간 : <input type="number" id="time" required> 시간<br>
+            시 험 명&nbsp;&nbsp;: <input type="text" id="name" name="test_name" required><br>
+            응시기간 : <input type="date" id="date1" name="date1"> ~ <input type="date" id="date2" name="date2"required><br>
+            응시시간 : <input type="number" id="time" name="time" required> 시간<br>
             채점방식 :
-            <input type="radio" name="auto" id="auto" value="자동" required>자동
-            <input type="radio" name="auto" id="manual" value="수동">수동<br>
+            <input type="radio" name="auto" id="auto" name="auto" value="자동" required>자동
+            <input type="radio" name="auto" id="manual" name="manual" value="수동">수동<br>
         </div>
 
         <h3>문제</h3>
@@ -147,15 +147,16 @@ pageEncoding="utf-8"%>
             </table>
         </div>
         <br>
-    </div>
+        
 
-    <br>
-    <div id="btndiv">
         <br>
-        <input type="submit" class="btn" id="save" value="저장" onclick="save()">&nbsp;
-        <input type="button" class="btn" id="cancle" value="취소" onclick="goBack()">
-        <br><br>
-    </div>
+        <div id="btndiv">
+            <br>
+            <input type="submit" class="btn" id="save" value="저장" onclick="save()">&nbsp;
+            <input type="button" class="btn" id="cancle" value="취소" onclick="goBack()">
+            <br><br>
+        </div>
+    </form>
 
     <script>
         var cnt = 0;
@@ -324,7 +325,6 @@ pageEncoding="utf-8"%>
 
                     if (ex != excnt) {
                         alert("보기 개수를 맞춰주세요");
-                        return;
                     }
                 }
             }

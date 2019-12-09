@@ -16,9 +16,6 @@ String time = request.getParameter("time");
 String auto = request.getParameter("auto");
 if (auto == null) auto = request.getParameter("manual");
 
-String for_test=request.getParameter("list");
-out.println(for_test);
-
 java.util.Date from = new java.util.Date();
 java.text.SimpleDateFormat transFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 String to = transFormat.format(from);
