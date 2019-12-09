@@ -146,6 +146,8 @@ pageEncoding="utf-8"%>
       if (ids.indexOf(id.value) != -1) {
         alert("중복된 아이디입니다.");
         id.value = "";
+      }else{
+        alert("사용할 수 있는 아이디입니다.")
       }
     }
   </script>

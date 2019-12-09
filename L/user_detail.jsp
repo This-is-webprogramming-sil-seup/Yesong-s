@@ -7,38 +7,109 @@ pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <style>
-    table {
-        border-spacing: 0px;
-        width: 100%;
-        border: 1px solid #444444;
-        border-collapse: collapse;
-        border-style: none;
-        padding: 0px;
-        width: 300px;
-    }
+     h2 {
+            color: #00b4ab;
+            text-align: center;
+        }
 
-    div{
-        border-radius: 20px;
-        padding:20px;
-        text-align: left;
-        background-color: white;
-    }
-    th,
-    td {
-        border-spacing: 0px;
-        padding: 0px;
-        border-style: none;
-    }
-    h2{
-        color: #00b4ab;
-    }
+        h3{
+            color:black;
+            margin-left:30px;
+        }
+
+        h4{
+            color:gray;
+            margin-left:50px;
+        }
+
+        body {
+            background-color: #DADADA;
+        }
+
+        #info, #studentsinfo, #backbtn{
+            padding:15px;
+            border-radius:5px;
+            display:table;
+            width:800px;
+            margin-left:auto;
+            margin-right:auto;
+            background-color: white;
+        }
+
+        #testInfo, #doneInfo, #notdoneInfo{
+            text-align:center;
+        }
+
+        table{
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+
+        th, td{
+            border: 1px solid gray;
+            padding:5px;
+        }
+
+        .title{
+            font-weight:bold;
+            background-color:#DADADA;
+            width:300px;
+            text-align:center;
+        }
+
+        .sub{
+            width:250px;
+        }
+        
+        .scoringbtn{
+            background:none;
+            border:none;
+            color:#00b4ab;
+        }
+
+        .btn{
+            background-color:#00b4ab;
+            border:0px;
+            color:white;
+            width:800px;
+            height:40px;
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        #q{
+            width:400px;
+        }
+
+        #a{
+            width:200px;
+        }
+
+        #sco, #av{
+            width:50px;
+        }
+
+        #wr{
+            width:70px;
+        }
+        #asdinfo{
+        background: #fff;
+        }
+        #asdinfo:hover{
+            background: #ddd;
+        }
+
 </style>
 
 
 
 <body  bgcolor = #dadada>
-    <div>
-    <h2>상세 정보</h2>
+    <h2>시험 상세정보</h2>
+    <div id = "info">
+    <h3>시험 정보</h3>
     
     <script>
         var s="[";

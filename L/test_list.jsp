@@ -11,16 +11,93 @@ pageEncoding="utf-8"%>
         width: 100%;
         border: 1px solid #444444;
         border-collapse: collapse;
+        text-align: center;
     }
 
-    th,
+    tr,
     td {
         border: 1px solid #444444;
+    }
+    tr{
+        background: #fff;
+    }
+    tr:hover{
+        background: #ddd;
+    }
+    #back{
+        border-radius: 20px;
+        padding:25px;
+        background-color: white;
+    }
+    th {
+        background-color: #AAAAAA;
+        border: 1px solid #444444;
+    }
+    p{
+        text-align: right;
+    }
+    .left-box {
+    float: left;
+    /* width: 50%; */
+    }
+    .right-box {
+    float: right;
+    /* width: 50%; */
+    }
+    #btn{
+        border: 1px solid #00b4ab; 
+        background-color: rgba(0,0,0,0); 
+        color:#00b4ab; 
+        padding: 5px;
+
+    }
+    #btn1{
+        border: 1px solid #00b4ab; 
+        background-color: rgba(0,0,0,0); 
+        color: #00b4ab; 
+        padding: 5px;
+        border-top-left-radius: 5px; 
+        border-bottom-left-radius: 5px;
+    }
+    #btn2{
+        border: 1px solid #00b4ab; 
+        background-color: rgba(0,0,0,0); 
+        color: #00b4ab; 
+        padding: 5px;
+        border-top-right-radius: 5px; 
+        border-bottom-right-radius: 5px;
+    }
+    #btn:hover{
+        color:white; 
+        background-color: #00b4ab;
+    }
+    #btn1:hover{
+        color:white; 
+        background-color: #00b4ab;
+    }
+    #btn2:hover{
+        color:white; 
+        background-color: #00b4ab;
+    }
+    #btn3{
+        border: 1px solid #00b4ab; 
+        background-color: rgba(0,0,0,0); 
+        color: #00b4ab; 
+        padding: 5px;
+        border-top-left-radius: 5px; 
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 5px; 
+        border-bottom-right-radius: 5px;
+    }
+    #btn3:hover{
+        color:white; 
+        background-color: #00b4ab;
     }
 </style>
 
 
-<body>
+<body bgcolor = #dadada>
+    <div id = 'back'>
     <script>
     var s = "[";
         <%
@@ -46,28 +123,96 @@ pageEncoding="utf-8"%>
             s=s.substr(0, s.length - 1);
         s += "]";        
 
+        var Request = function () {
+            this.getParameter = function (name) {
+                var rtnval = '';
+                var nowAddress = unescape(location.href);
+                var parameters = (nowAddress.slice(nowAddress.indexOf('?') + 1,
+                    nowAddress.length)).split('&');
+                for (var i = 0; i < parameters.length; i++) {
+                    var varName = parameters[i].split('=')[0];
+                    if (varName.toUpperCase() == name.toUpperCase()) {
+                        rtnval = parameters[i].split('=')[1];
+                        break;
+                    }
+                }
+                return rtnval;
+            }
+        }
+        var request = new Request();
+        var search = request.getParameter('search');
+
+        document.write("<div class='left-box'>");
+        document.write("<button id = 'btn1' onclick=\'sortTableDate(1)\'>응시기간 오름차순</button>");
+        document.write("<button id = 'btn' onclick=\'sortTableDate(2)\'>응시기간 내림차순</button>");
+        document.write("<button id = 'btn' onclick=\'sortTableMadeDate(1)\'>생성일시 오름차순</button>");
+        document.write("<button id = 'btn2' onclick=\'sortTableMadeDate(2)\'>생성일시 내림차순</button></div>");
+        document.write("<div class='right-box'>");
+        document.write("<input type=\'text\' id=\'search\' value = "+search+">");
+        document.write(" <button id = 'btn3' onclick=\'searchTable()\'>검색</button></div>")
+        
+        document.write("</br></br><form onsubmit=\"checkDelete();\"><table name = \'tab\'><tr><th>name</th><th>madeby</th><th>made date</th><th>date</th><th>time</th><th>info</th><th>avg</th><th></th></tr>");
         var test_list = JSON.parse(s);
         var row = Number(test_list.length);
-        document.write("<button onclick=\'sortTableDate(1)\'>응시기간 오름차순</button>");
-        document.write("<button onclick=\'sortTableDate(2)\'>응시기간 내림차순</button>");
-        document.write("<button onclick=\'sortTableDate(1)\'>생성일시 오름차순</button>");
-        document.write("<button onclick=\'sortTableDate(2)\'>생성일시 내림차순</button>");
-        document.write("<form onsubmit=\"checkDelete();\"><table name = \'tab\'><tr><td></td><td>name</td><td>madeby</td><td>made date</td><td>date</td><td>time</td><td>info</td><td>avg</td></tr>");
-        for (i = 0; i < row; i++) {
-            var test_student = test_list[i].student;
-            for(j=0;j<Number(test_student.length);j++){
-                
+        if(search == ""){
+            for (i = 0; i < row; i++) {
+                var id = test_list[i].name;
+                var test_student = test_list[i].student;
+                var sum = 0;
+                var num = 0;
+                for(j=0;j<Number(test_student.length);j++){
+                    if(test_student[j].didit=="yes"){
+                        sum = sum + Number(test_student[j].score);
+                        num = num + 1;
+                    }
+                }
+                var avg = 0;
+                if(num!=0) avg = sum / num;
+                document.write("<tr>");
+            
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].name + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].madeby + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].made_date + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].date + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].time + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + num + "/" + Number(test_student.length) + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + avg + "</td>");
+                document.write("<td><input type=\"checkbox\" name=\"delete_list\" value=\"" + i + "\"></td>");
+                document.write("</tr>");
             }
-            document.write("<tr>");
-            document.write("<td><input type=\"checkbox\" name=\"delete_list\" value=\"" + i + "\"></td>");
-            document.write("<td>" + test_list[i].name + "</td>");
-            document.write("<td>" + test_list[i].madeby + "</td>");
-            document.write("<td>" + test_list[i].made_date + "</td>");
-            document.write("<td>" + test_list[i].date + "</td>");
-            document.write("<td>" + test_list[i].time + "</td>");
-            document.write("<td>" + test_list[i].info + "</td>");
-            document.write("<td>" + test_list[i].avg + "</td>");
-            document.write("</tr>");
+        }
+        else{
+            for (i = 0; i < row; i++) {
+                var id = test_list[i].name;
+                var isInList = 0;
+                if(test_list[i].madeby == search) isInList = 1;
+                var test_student = test_list[i].student;
+                var sum = 0;
+                var num = 0;
+                for(j=0;j<Number(test_student.length);j++){
+                    if(test_student[j].didit=="yes"){
+                        if(test_student[j].name == search) isInList = 1;
+                        sum = sum + Number(test_student[j].score);
+                        num = num + 1;
+                    }
+                }
+                if(isInList == 0){
+                    continue;
+                }
+                var avg = 0;
+                if(num!=0) avg = sum / num;
+                document.write("<tr>");
+            
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].name + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].madeby + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].made_date + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].date + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + test_list[i].time + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + num + "/" + Number(test_student.length) + "</td>");
+                document.write("<td onclick=\"clickTr(\'"+id+"\')\">" + avg + "</td>");
+                document.write("<td><input type=\"checkbox\" name=\"delete_list\" value=\"" + i + "\"></td>");
+                document.write("</tr>");
+            }
         }
         document.write("</table>");
         document.write("<input type=\"submit\" value=\"삭제\"/>");
@@ -137,17 +282,19 @@ pageEncoding="utf-8"%>
                 }
             }
         }
-        // function searchProf(test_list){
-        //     var table = document.getElementsByTagName('table');
-        //     var rows = talbe[0].rows;
-        //     for(var i=table.rows.lenth-1;i>=1;i--){
-        //         table.deleteRow(i);
-        //     }
-        //     for(var i=0;i<Number(test_list.length)){
-
-        //     }
-        // }
+        function searchTable(){
+            var searchName = document.getElementById('search').value;
+            if(searchName == ""){
+                alert("검색어를 입력해주세요");
+                return;
+            }
+            location.href="test_list.html?search="+searchName;
+        }
+        function clickTr(id){
+            location.href="test_detail.html?id="+id;
+        }
     </script>
+    </div>
 </body>
 
 </html>

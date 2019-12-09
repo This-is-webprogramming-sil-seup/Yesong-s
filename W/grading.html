@@ -67,8 +67,12 @@
 
 
         <script>
-            var testname = getTestName();
-            var stuname = getStuName();
+            var testname = getTestName().split("&")[0].substring(5,);
+            var stuname = getTestName().split("&")[1].substring(3,);
+            
+            function complete(){
+                location.href="testdetail.jsp?name="+testname;
+            }
 
             function init(){
                 var info = document.getElementById("info");
