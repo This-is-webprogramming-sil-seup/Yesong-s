@@ -1,3 +1,9 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html;charset=utf-8"
+pageEncoding="utf-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
 <!DOCTYPE html>
 <html>
 <style>
@@ -30,6 +36,25 @@
     <div>
     <h2>회원 정보 수정</h2>
     <script>
+         var s="[";
+        <%
+            Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
+        String query = "SELECT * FROM user_data";
+        query+=";";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        
+        rs.next();
+        while (rs.next()) {%>
+            s+='{"id": "<%=rs.getString("user_id")%>",';
+            s += '"name":"<%=rs.getString("user_name")%>",';
+            s += '"sub_date": "null",';
+            s += '"grade":"<%=rs.getString("user_grade")%>"},';
+        <%}%>
+            s=s.substr(0, s.length - 1);
+        s += "]";
+
         var Request = function () {
             this.getParameter = function (name) {
                 var rtnval = '';
@@ -50,12 +75,6 @@
         var request = new Request();
 
         var id = request.getParameter('id');
-
-        var s = '[{"id": "hh", "name":"Hong","sub_date":"19.02.11", "grade": "professor", "prof_ok":"19.02.11", "last_login":"19.8.16", "pw":"qwer1234"},'
-            + '{"id": "kk", "name":"Kim","sub_date":"19.02.12", "grade": "student", "prof_ok":"none", "last_login":"19.5.12", "pw":"qwer1234"},'
-            + '{"id": "pp", "name":"Park","sub_date":"19.01.11", "grade": "admin", "prof_ok":"none", "last_login":"19.11.25", "pw":"qwer1234"},'
-            + '{"id": "nop", "name":"Nooop","sub_date":"19.08.11", "grade": "professor", "prof_ok":"none", "last_login":"19.11.25", "pw":"qwer1234"}]';
-
         var user_list = JSON.parse(s);
         var row = Number(user_list.length);
         for (i = 0; i < row; i++) {

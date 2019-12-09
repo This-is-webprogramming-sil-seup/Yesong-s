@@ -1,3 +1,9 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html;charset=utf-8"
+pageEncoding="utf-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
+<meta charset="UTF-8">
 <!DOCTYPE html>
 <html>
 <style>
@@ -16,12 +22,31 @@
 
 <body>
     <script>
-        var t = '[{"name":"test1", "madeby":"Hong", "date":"19.05.12", "made_date": "19.04.11", "time": "12", "info":"12/50", "avg": "92",'
-                    +'"student":[{"name" : "kk", "didit": "yes"}]'+'},'
-            + '{"name":"test2", "madeby":"Hong", "date":"19.04.12", "made_date": "19.02.01", "time": "11", "info":"23/50", "avg": "88",'
-                    +'"student":[{"name" : "kk", "didit": "no"}]'+'}]';
+    var s = "[";
+        <%
+            Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
+        String query = "SELECT * FROM test_data";
+        query+=";";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        
+        while (rs.next()) {%>
+            var tmp="<%=rs.getString("birthday")%>";
+            tmp=tmp.substring(0,10);
+            
+            s+='{"name": "<%=rs.getString("test_name")%>",';
+            s += '"madeby":"<%=rs.getString("Professor_id")%>",';
+            s += '"date": "<%=rs.getString("test_start_period")%>~<%=rs.getString("test_end_period")%>"';
+            s += ',"made_date":"'+tmp+'",';
+            s += '"time": "<%=rs.getString("test_start_time")%>",';
+            s+='"info":"12/50", "avg": "92",';
+            s+='"student":[{"name" : "kk", "didit": "yes"}]'+'},';
+        <%}%>
+            s=s.substr(0, s.length - 1);
+        s += "]";        
 
-        var test_list = JSON.parse(t);
+        var test_list = JSON.parse(s);
         var row = Number(test_list.length);
         document.write("<button onclick=\'sortTableDate(1)\'>응시기간 오름차순</button>");
         document.write("<button onclick=\'sortTableDate(2)\'>응시기간 내림차순</button>");
