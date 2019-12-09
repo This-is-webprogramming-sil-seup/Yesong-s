@@ -166,10 +166,28 @@ pageEncoding="utf-8"%>
 
         var s = '[{"name": "나의 기분","duration": 7,"time": 2,"auto": "false","applicantsInfo": [{"done":10,"total":30,"list":[{}]}],"average": 78,"shortAnswer":[{"question":"내 기분을 맞춰봐!","answer":"하기싫다","points":50,"average":50,"wrongrate":0},{"question":"하기 싫을 땐 어떻게 해야하지","answer":"때려치면된다","points":40,"average":25,"wrongrate":50}],"multipleChoice":[{"question":"가장 급한 과제는?","exampleNum":5,"examples":[{"보기":"컴네"},{"보기":"컴비"},{"보기":"웹프실"},{"보기":"오토마타 공부"},{"보기":"휴학"}],"answer":"5","points":10,"average":50,"wrongrate":0}]},{"name": "하기 싫다","make":"2019-12-07","from":"2019-12-07", "to":"2019-12-15","time": 1,"auto": "true","applicantsInfo": [{"done":0,"total":41,"list":[{}]}],"average": 0,"shortAnswer":[],"multipleChoice":[{"question":"집에 가고 싶다","exampleNum":4,"examples":[{"보기":"살려줘"},{"보기":"배고파"},{"보기":"밥먹고 싶다"},{"보기":"힝힝"}],"answer":"1","points":10,"average":10,"wrongrate":0},{"question":"아랫분도 이미 동의하신 내용","exampleNum":5,"examples":[{"보기":"ㅇㅇ"},{"보기":"ㄴㄴ"},{"보기":"ㄷㄷ"},{"보기":"ㄹㅇ"},{"보기":"ㅇㅎ"}],"answer":"4","points":50,"average":25,"wrongrate":50}]}]';
 
-        var str = '[{"name":"가","id":"ga"},{"name":"나","id":"na"},{"name":"다","id":"da"},{"name":"라","id":"ra"},{"name":"마","id":"ma"},{"name":"바","id":"ba"},{"name":"사","id":"sa"},{"name":"아","id":"aa"},{"name":"자","id":"ja"},{"name":"차","id":"cha"}]';
+        var st="[";
+        <%
+            Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
+        String query = "SELECT * FROM user_data where user_grade='student'";
+        query+=";";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        
+        while (rs.next()) {%>
+            st +='{"id": "<%=rs.getString("user_id")%>",';
+            st += '"name":"<%=rs.getString("user_name")%>",';
+            st += '"sub_date": "null",';
+            st += '"grade":"<%=rs.getString("user_grade")%>"},';
+        <%}%>
+            st=st.substr(0, s.length - 1);
+        st += "]";
+
+        //var str = '[{"name":"가","id":"ga"},{"name":"나","id":"na"},{"name":"다","id":"da"},{"name":"라","id":"ra"},{"name":"마","id":"ma"},{"name":"바","id":"ba"},{"name":"사","id":"sa"},{"name":"아","id":"aa"},{"name":"자","id":"ja"},{"name":"차","id":"cha"}]';
 
         var tests = eval("(" + s + ")");
-        var students = eval("(" + str + ")");
+        var students = eval("(" + st + ")");
         var length = Object.keys(tests).length;
         var slen = Object.keys(students).length;
         var name = getName();
