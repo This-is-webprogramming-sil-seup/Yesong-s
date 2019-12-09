@@ -7,23 +7,19 @@ pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <style>
-    table {
-        border-spacing: 0px;
-        width: 100%;
-        border: 1px solid #444444;
+ table {
+        background-color: white;
+        margin-left: auto;
+        margin-right: auto;
         border-collapse: collapse;
-        border-style: none;
-        padding: 0px;
-        width: 300px;
+        border: 1px solid gray;
     }
 
     th,
     td {
-        border-spacing: 0px;
-        padding: 0px;
-        border-style: none;
+        border: 1px solid gray;
+        padding: 5px;
     }
-
     div {
         padding: 15px;
         border-radius: 5px;
@@ -62,7 +58,7 @@ pageEncoding="utf-8"%>
         padding: 0px;
         border-style: none;
     }
-    
+
     #nav {
         border-spacing: 0px;
         width: 100%;
@@ -81,6 +77,19 @@ pageEncoding="utf-8"%>
         border-spacing: 0px;
         padding: 0px;
         border-style: none;
+    }
+    .title {
+        font-weight: bold;
+        background-color: #DADADA;
+        width: 300px;
+        text-align: center;
+    }
+
+    .sub {
+        width: 250px;
+    }
+    p {
+        text-align: center;
     }
 </style>
 
@@ -132,22 +141,22 @@ pageEncoding="utf-8"%>
                 }
             }
             document.write("<table>")
-            document.write("<tr><th>아이디</th><th>" + user_list[i].id + "</th></tr>");
-            document.write("<tr><th>이름</th><th>" + user_list[i].name + "</th></tr>");
-            document.write("<tr><th>등급</th><th>" + user_list[i].grade + "</th></tr>");
-            document.write("<tr><th>가입 일시</th><th>" + user_list[i].sub_date + "</th></tr>");
+            document.write("<tr><th class='title'>아이디</th><th class='sub'>" + user_list[i].id + "</th></tr>");
+            document.write("<tr><th class='title'>이름</th><th class='sub'>" + user_list[i].name + "</th></tr>");
+            document.write("<tr><th class='title'>등급</th><th class='sub'>" + user_list[i].grade + "</th></tr>");
+            document.write("<tr><th class='title'>가입 일시</th><th class='sub'>" + user_list[i].sub_date + "</th></tr>");
             if (user_list[i].grade == "professor") {
                 if (user_list[i].prof_ok == 'none') {
-                    document.write("<tr><th>승인 여부</th><th>미승인</th></tr>");
+                    document.write("<tr><th class='title'>승인 여부</th><th class='sub'>미승인</th></tr>");
                 }
                 else {
-                    document.write("<tr><th>승인 여부</th><th>승인</th></tr>");
-                    document.write("<tr><th>승인 일시</th><th>" + user_list[i].prof_ok + "</th></tr>");
+                    document.write("<tr><th class='title'>승인 여부</th><th class='sub'>승인</th></tr>");
+                    document.write("<tr><th class='title'>승인 일시</th><th class='sub'>" + user_list[i].prof_ok + "</th></tr>");
                 }
 
             }
-            document.write("<tr><th>최종 로그인 정보</th><th>" + user_list[i].last_login + "</th></tr></table>");
-            document.write("<form></br><input type=\'button\' value=\'수정\' onclick=\'location.href=\"user_change.html?id=" + id + "\"\'</form>");
+            document.write("<tr><th class='title'>최종 로그인 정보</th><th class='sub'>" + user_list[i].last_login + "</th></tr></table>");
+            document.write("<form></br><p><input type=\'button\' class = 'btn' value=\'수정\' onclick=\'location.href=\"user_change.html?id=" + id + "\"\'></p></form>");
             function clickNav(type) {
                 if (type == 1) {
                     location.href = "user_list.html";

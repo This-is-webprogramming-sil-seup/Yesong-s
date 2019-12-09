@@ -92,6 +92,7 @@ pageEncoding="utf-8"%>
     }
 
     #tdUser {
+        background-color: white;
         text-align: center;
         border-spacing: 0px;
         padding: 0px;
