@@ -87,7 +87,7 @@ pageEncoding="utf-8"%>
         objLoginPW.value = "";
       } else {
         if (grades[tmp] == "professor") {
-          location.href = '../W/professor.html?name=' + objLoginID.value;
+          location.href = '../W/professor.jsp?name=' + objLoginID.value;
         }
         else {
           location.href = 'user_main.html';
