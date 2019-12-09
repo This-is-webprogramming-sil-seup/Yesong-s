@@ -24,6 +24,16 @@
       font-size: 10px;
       font-weight: bold;
     }
+    #origin_btn {
+      width: 70px;
+      height: 32px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+    }
     #sortox_btn {
       width: 80px;
       height: 28px;
@@ -88,12 +98,13 @@
     <h1 style="text-align: center; font-weight:bold; color: #00b4ab;"> 시험 목록 </h1>
     <form method="POST" action="">
       <input type="text" id="search" placeholder="&nbsp시험명 이름">&nbsp
-      <input type="button" id="search_btn" value="검색" onclick="search_fun();" /><br>
-      <table style="width:300px; margin-top:13px;"><tr><td>
-      <input type="button" id="sortox_btn" value="응시여부 정렬" onclick="" />&nbsp&nbsp
+      <input type="button" id="search_btn" value="검색" onclick="search_fun();" /> &nbsp 
+      <input type="button" id="origin_btn" value="원래대로" onclick="location.href='user_main.html'" /> <br>
+      <table style="width:300px; margin-top:13px;"><tr><th>
+      <input type="button" id="sortox_btn" value="응시여부 정렬" onclick="sort_func();" />&nbsp&nbsp
       <input type="button" id="sortname_btn" value="시험명 정렬" onclick="" />&nbsp&nbsp
       <input type="button" id="sortprof_btn" value="교수명 정렬" onclick="" />&nbsp&nbsp
-      </td></tr></table>
+      </th></tr></table>
     </form>
     <br>
     <script>
@@ -104,45 +115,28 @@
         var test_list = JSON.parse(s);
         var row = Number(test_list.length);
         document.write("<table style=\"width: 800px;\"><tr style=\"background-color:white;\"><td style=\"width:500px; border-radius:5px;\">");
-        document.write("<table id=\"inner\"><tr><th style=\"width:70px;\">시험명</th><th style=\"width:70px;\">생성자명</th><th style=\"width:170px;\">응시기간</th><th style=\"width:70px;\">응시여부</th><th style=\"width:60px;\">성적</th><th style=\"width:60px;\">총배점</th></tr>");
+        document.write("<table name=\"inner_tab\" id=\"inner\"><tr><th style=\"width:70px;\">시험명</th><th style=\"width:70px;\">생성자명</th><th style=\"width:170px;\">응시기간</th><th style=\"width:70px;\">응시여부</th><th style=\"width:60px;\">성적</th><th style=\"width:60px;\">총배점</th><th style=\"width:60px;\">시험정보</th></tr>");
         document.write("<br>");
         for (i = 0; i < row; i++) {
             var id = test_list[i].name;
             document.write("<tr>");
+            document.write("<td>" + test_list[i].name + "</td>");
+            document.write("<td>" + test_list[i].id + "</td>");
+            document.write("<td>" + test_list[i].sub_date + "</td>");
+            document.write("<td>" + test_list[i].done + "</td>");
+            document.write("<td>" + test_list[i].grade + "</td>");        
+            document.write("<td>" + test_list[i].total + "</td>");  
             if (test_list[i].done == 'O') {
-                document.write("<td>" + "&nbsp" + "<a id=\"did_id\" href = \"didtest.html\" + >" + test_list[i].name+"</a></td>");
+                document.write("<td>" + "<a id=\"did_id\" href = \"didtest.html\" + >"+ "열람하기" + "</a></td>");
             }
             else if (test_list[i].done == 'X') {
-                document.write("<td>" + "&nbsp" + "<a id=\"will_id\" href = \"willtest.html\" + >"+ test_list[i].name+"</a></td>");
-            }
-            document.write("<td>" + "&nbsp" + test_list[i].id + "</td>");
-            document.write("<td>" + "&nbsp" + test_list[i].sub_date + "</td>");
-            document.write("<td>" + "&nbsp" + test_list[i].done);
-            document.write("<td>" + "&nbsp" + test_list[i].grade);        
-            document.write("<td>" + "&nbsp" + test_list[i].total);         
-            document.write("</td></tr>");
+                document.write("<td>" + "<a id=\"will_id\" href = \"willtest.html\" + >"+ "열람하기" + "</a></td>");
+            }      
+            document.write("</tr>");
         }
         document.write("</table>");
         document.write("<br>");
         document.write("</td></tr></table>");
-
-        function add_row(i, tests) {
-                var table_body = document.getElementById('inner');
-                var row = table_body.insertRow(table_body.rows.length);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-                var cell4 = row.insertCell(3);
-                var cell5 = row.insertCell(4);
-                var cell6 = row.insertCell(5);
-                
-                cell1.innerHTML = tests[i].name;
-                cell2.innerHTML = tests[i].id;
-                cell3.innerHTML = tests[i].sub_date;
-                cell4.innerHTML = tests[i].done;
-                cell5.innerHTML = tests[i].grade;
-                cell6.innerHTML = tests[i].total;
-        }
         
         function search_fun() {
             var key = document.getElementById('search').value;
@@ -152,17 +146,17 @@
             }
             var temp_list = JSON.parse(s);
             var table = document.getElementById('inner');
-            for (var i = 1; i < table.rows.length; i++) {
-                if (temp_list[i-1].name != key) {
-                   table.deleteRow(i);
+            i = 1;
+            while ( i < table.rows.length) {
+                var cmp_n = document.getElementsByTagName('td')[7*(i-1)+1].childNodes[0].nodeValue;
+                if (cmp_n == key) {
+                    i++;
+                    
                 }
-                else if (temp_list[i-1].name == key) {
-                   continue;
-                }                       
+                else {
+                    table.deleteRow(i);
+                }
             }
-        }
-        function sort_func() {
-            
         }
     </script>
   </body>
