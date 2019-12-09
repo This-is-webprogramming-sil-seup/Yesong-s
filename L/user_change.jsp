@@ -13,27 +13,13 @@ pageEncoding="utf-8"%>
         border-collapse: collapse;
     }
 
-    div{
-        border-radius: 20px;
-        padding:25px;
-        text-align: left;
-        background-color: white;
-    }
-
     th,
     td {
         border: 1px solid #444444;
     }
-    h2{
-        color: #00b4ab;
-    }
-    table{
-        width: 300px;
-    }
 </style>
 
-<body  bgcolor = #dadada>
-    <div>
+<body>
     <h2>회원 정보 수정</h2>
     <script>
         var Request = function () {
@@ -88,7 +74,7 @@ pageEncoding="utf-8"%>
         document.write("</table>");
         
         document.write("</form>");  
-        document.write("</br><button onclick=\'checkForm()\'>수정</button>");
+        document.write("<button onclick=\'checkForm()\'>수정</button>");
         function checkForm(){
             form = document.f;
             if(form.nm.value==""){
@@ -112,7 +98,7 @@ pageEncoding="utf-8"%>
             alert("승인되었습니다.");
         }
     </script>
-    </div>
+
 </body>
 
 </html>
