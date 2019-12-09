@@ -112,15 +112,15 @@ pageEncoding="utf-8"%>
 
 <body onload="init()">
     <% String name=request.getParameter("name");%>
-    <div id="createform">
+    <form name="frm" id="createform" action="createSend.jsp?name=<%=name%>" method="post">
         <h3>시험 정보</h3>
         <div id="testinfo">
-            시 험 명&nbsp;&nbsp;: <input type="text" id="name" required><br>
-            응시기간 : <input type="date" id="date1"> ~ <input type="date" id="date2" required><br>
-            응시시간 : <input type="number" id="time" required> 시간<br>
+            시 험 명&nbsp;&nbsp;: <input type="text" id="name" name="test_name" required><br>
+            응시기간 : <input type="date" id="date1" name="date1"> ~ <input type="date" id="date2" name="date2"required><br>
+            응시시간 : <input type="number" id="time" name="time" required> 시간<br>
             채점방식 :
-            <input type="radio" name="auto" id="auto" value="자동" required>자동
-            <input type="radio" name="auto" id="manual" value="수동">수동<br>
+            <input type="radio" name="auto" id="auto" name="auto" value="자동" required>자동
+            <input type="radio" name="auto" id="manual" name="manual" value="수동">수동<br>
         </div>
 
         <h3>문제</h3>
@@ -147,19 +147,16 @@ pageEncoding="utf-8"%>
             </table>
         </div>
         <br>
-    </div>
+        
 
-    <br>
-
-
-
-    <div id="btndiv">
         <br>
-        <input type="submit" class="btn" id="save" value="저장" onclick="save()">&nbsp;
-        <input type="button" class="btn" id="cancle" value="취소" onclick="goBack()">
-        <br><br>
-    </div>
-
+        <div id="btndiv">
+            <br>
+            <input type="submit" class="btn" id="save" value="저장" onclick="save()">&nbsp;
+            <input type="button" class="btn" id="cancle" value="취소" onclick="goBack()">
+            <br><br>
+        </div>
+    </form>
 
     <script>
         var cnt = 0;
@@ -169,10 +166,28 @@ pageEncoding="utf-8"%>
 
         var s = '[{"name": "나의 기분","duration": 7,"time": 2,"auto": "false","applicantsInfo": [{"done":10,"total":30,"list":[{}]}],"average": 78,"shortAnswer":[{"question":"내 기분을 맞춰봐!","answer":"하기싫다","points":50,"average":50,"wrongrate":0},{"question":"하기 싫을 땐 어떻게 해야하지","answer":"때려치면된다","points":40,"average":25,"wrongrate":50}],"multipleChoice":[{"question":"가장 급한 과제는?","exampleNum":5,"examples":[{"보기":"컴네"},{"보기":"컴비"},{"보기":"웹프실"},{"보기":"오토마타 공부"},{"보기":"휴학"}],"answer":"5","points":10,"average":50,"wrongrate":0}]},{"name": "하기 싫다","make":"2019-12-07","from":"2019-12-07", "to":"2019-12-15","time": 1,"auto": "true","applicantsInfo": [{"done":0,"total":41,"list":[{}]}],"average": 0,"shortAnswer":[],"multipleChoice":[{"question":"집에 가고 싶다","exampleNum":4,"examples":[{"보기":"살려줘"},{"보기":"배고파"},{"보기":"밥먹고 싶다"},{"보기":"힝힝"}],"answer":"1","points":10,"average":10,"wrongrate":0},{"question":"아랫분도 이미 동의하신 내용","exampleNum":5,"examples":[{"보기":"ㅇㅇ"},{"보기":"ㄴㄴ"},{"보기":"ㄷㄷ"},{"보기":"ㄹㅇ"},{"보기":"ㅇㅎ"}],"answer":"4","points":50,"average":25,"wrongrate":50}]}]';
 
-        var str = '[{"name":"가","id":"ga"},{"name":"나","id":"na"},{"name":"다","id":"da"},{"name":"라","id":"ra"},{"name":"마","id":"ma"},{"name":"바","id":"ba"},{"name":"사","id":"sa"},{"name":"아","id":"aa"},{"name":"자","id":"ja"},{"name":"차","id":"cha"}]';
+        var st="[";
+        <%
+            Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_data?serverTimezone=UTC", "root", "3br3br");
+        String query = "SELECT * FROM user_data where user_grade='student'";
+        query+=";";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        
+        while (rs.next()) {%>
+            st +='{"id": "<%=rs.getString("user_id")%>",';
+            st += '"name":"<%=rs.getString("user_name")%>",';
+            st += '"sub_date": "null",';
+            st += '"grade":"<%=rs.getString("user_grade")%>"},';
+        <%}%>
+            st=st.substr(0, s.length - 1);
+        st += "]";
+
+        //var str = '[{"name":"가","id":"ga"},{"name":"나","id":"na"},{"name":"다","id":"da"},{"name":"라","id":"ra"},{"name":"마","id":"ma"},{"name":"바","id":"ba"},{"name":"사","id":"sa"},{"name":"아","id":"aa"},{"name":"자","id":"ja"},{"name":"차","id":"cha"}]';
 
         var tests = eval("(" + s + ")");
-        var students = eval("(" + str + ")");
+        var students = eval("(" + st + ")");
         var length = Object.keys(tests).length;
         var slen = Object.keys(students).length;
         var name = getName();
@@ -217,10 +232,20 @@ pageEncoding="utf-8"%>
         }
 
 
+        function listcontent(){
+            var list=document.getElementById("questionList");
+            var text=document.getElementById("questionListContent");
+            document.window.alert(list.value);
+            document.write(list.value);
+            text.value=list.value;
+            return false;
+        }
+
         function makeShortAnswer() {
             shortcnt++;
             cnt += 1;
             var body = document.getElementById("questionList");
+
             var div = document.createElement('div');
             div.className = "q";
             div.id = "q" + cnt;
@@ -235,13 +260,13 @@ pageEncoding="utf-8"%>
             mulcnt++;
             cnt += 1;
             var body = document.getElementById("questionList");
+
             var div = document.createElement('div');
             div.className = "q";
             div.id = "q" + cnt;
             var ss = cnt + "번<br><br>문제 : " + "<input type='text' id='question" + cnt + "' class='t'><br>보기개수 : <select id='exNum" + cnt + "' name='exampleNum'><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select><br><br>보기<br>1번&nbsp;:&nbsp;&nbsp;<input type='text' id='num1" + cnt + "' class='t'><br>2번&nbsp;:&nbsp;&nbsp;<input type='text' id='num2" + cnt + "' class='t'><br>3번&nbsp;:&nbsp;&nbsp;<input type='text' id='num3" + cnt + "' class='t'><br>4번&nbsp;:&nbsp;&nbsp;<input type='text' id='num4" + cnt + "' class='t'><br>5번&nbsp;:&nbsp;&nbsp;<input type='text' id='num5" + cnt + "' class='t'><br>&nbsp;&nbsp;답&nbsp;&nbsp;: " + "<input type='text' id='answer" + cnt + "' class='t'><br>배점 : " + "<input type='text' id='score" + cnt + "' class='t'><br><br>";
             div.innerHTML = ss;
             body.append(div);
-
         }
 
         function goBack() {
@@ -318,7 +343,6 @@ pageEncoding="utf-8"%>
 
                     if (ex != excnt) {
                         alert("보기 개수를 맞춰주세요");
-                        return;
                     }
                 }
             }

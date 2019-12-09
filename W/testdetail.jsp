@@ -220,7 +220,6 @@ pageEncoding="utf-8"%>
 
         //s=s.substr(0,s.length-1);
         //s+="]";
-        window.alert(s);
 
         var tests = eval("(" + s + ")");
         var length = Object.keys(tests).length;
@@ -305,7 +304,7 @@ pageEncoding="utf-8"%>
 
                 cell1.innerHTML = tests[i].applicantsInfo[0].list[0].done[j].name;
                 cell2.innerHTML = tests[i].applicantsInfo[0].list[0].done[j].score;
-                cell3.innerHTML = "<input type='button' value='채점하기' onclick=\"location.href='grading.html?" + tests[i].applicantsInfo[0].list[0].done[j].name + "'\"/>";
+                cell3.innerHTML = "<input type='button' value='채점하기' onclick=\"location.href='grading.html?name=<%=name%>&id=" + tests[i].applicantsInfo[0].list[0].done[j].name + "'\"/>";
             }
 
             var table = document.getElementById("notdoneInfo");
@@ -317,7 +316,7 @@ pageEncoding="utf-8"%>
 
                 cell1.innerHTML = tests[i].applicantsInfo[0].list[0].notDone[j].name;
                 cell2.innerHTML = tests[i].applicantsInfo[0].list[0].notDone[j].score;
-                cell3.innerHTML = "<input type='button' value='채점하기' onclick=\"location.href='grading.html?" + tests[i].name + "&" + tests[i].applicantsInfo[0].list[0].notDone[j].name + "'\"/>";
+                cell3.innerHTML = "<input type='button' value='채점하기' onclick=\"location.href='grading.html?name=<%=name%>&" + tests[i].name + "&" + tests[i].applicantsInfo[0].list[0].notDone[j].name + "'\"/>";
             }
         }
 

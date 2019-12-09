@@ -147,7 +147,6 @@
 
 
         <script>
-
             var s = '[]';
             var ans = '[]'
 
@@ -157,6 +156,12 @@
             var answers = eval("("+anw+")");
             var length = Object.keys(tests).length;
             var i = getTestNum();
+            //var testname = getTestName().split("&")[0].substring(5,);
+            //var stuname = getTestName().split("&")[1].substring(3,);
+            
+            function complete(){
+                location.href="testdetail.jsp?name="+testname;
+            }
 
 
             function init(){

@@ -40,6 +40,6 @@ stmt.close();
 conn.close();
 %>
 <html>
-<meta http-equiv="refresh" content="5;URL='professor.jsp'">
+<meta http-equiv="refresh" content="0;URL='professor.jsp?name=<%=professor_name%>'">
 
 </html>

@@ -119,6 +119,8 @@ pageEncoding="utf-8"%>
       } else {
         if (grades[tmp] == "professor") {
           location.href = '../W/professor.jsp?name=' + objLoginID.value;
+        }else if(grades[tmp]=="admin"){
+          location.href = '../L/user_list.jsp';
         }
         else {
           location.href = 'user_main.html';

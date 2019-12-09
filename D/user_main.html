@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,7 +11,7 @@
     }
     #search {
       border: 1.5px solid gray;
-      width:350px;
+      width:480px;
       height:27px;
     }
     #search_btn {
@@ -23,9 +24,41 @@
       font-size: 10px;
       font-weight: bold;
     }
-    #sort_btn {
+    #origin_btn {
       width: 70px;
       height: 32px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    #sortox_btn {
+      width: 80px;
+      height: 28px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center; 
+    }
+    #sortname_btn {
+      width: 72px;
+      height: 28px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center; 
+    }
+    #sortprof_btn {
+      width: 72px;
+      height: 28px;
       border: none;
       border-radius: 5px;
       background-color: #00b4ab;
@@ -64,14 +97,14 @@
   <body>
     <h1 style="text-align: center; font-weight:bold; color: #00b4ab;"> 시험 목록 </h1>
     <form method="POST" action="">
-      <select name="category" id="category_id">
-        <option value="done" selected>응시/미응시여부</option>
-        <option value="test_name">시험명</option>
-        <option value="prof_name">교수자명</option>
-      </select> &nbsp
-      <input type="text" id="search" placeholder="&nbsp이름" />&nbsp
-      <input type ="button" id="search_btn" value="검색" onclick="search()" />&nbsp
-      <input type ="button" id="sort_btn" value="정렬" onclick="sort()" />
+      <input type="text" id="search" placeholder="&nbsp시험명 이름">&nbsp
+      <input type="button" id="search_btn" value="검색" onclick="search_fun();" /> &nbsp 
+      <input type="button" id="origin_btn" value="원래대로" onclick="location.href='user_main.html'" /> <br>
+      <table style="width:300px; margin-top:13px;"><tr><th>
+      <input type="button" id="sortox_btn" value="응시여부 정렬" onclick="sort_func();" />&nbsp&nbsp
+      <input type="button" id="sortname_btn" value="시험명 정렬" onclick="" />&nbsp&nbsp
+      <input type="button" id="sortprof_btn" value="교수명 정렬" onclick="" />&nbsp&nbsp
+      </th></tr></table>
     </form>
     <br>
     <script>
@@ -82,32 +115,48 @@
         var test_list = JSON.parse(s);
         var row = Number(test_list.length);
         document.write("<table style=\"width: 800px;\"><tr style=\"background-color:white;\"><td style=\"width:500px; border-radius:5px;\">");
-        document.write("<table id=\"inner\"><tr><th style=\"width:70px;\">시험명</th><th style=\"width:70px;\">생성자명</th><th style=\"width:170px;\">응시기간</th><th style=\"width:70px;\">응시여부</th><th style=\"width:60px;\">성적</th><th style=\"width:60px;\">총배점</th></tr>");
+        document.write("<table name=\"inner_tab\" id=\"inner\"><tr><th style=\"width:70px;\">시험명</th><th style=\"width:70px;\">생성자명</th><th style=\"width:170px;\">응시기간</th><th style=\"width:70px;\">응시여부</th><th style=\"width:60px;\">성적</th><th style=\"width:60px;\">총배점</th><th style=\"width:60px;\">시험정보</th></tr>");
         document.write("<br>");
         for (i = 0; i < row; i++) {
             var id = test_list[i].name;
             document.write("<tr>");
+            document.write("<td>" + test_list[i].name + "</td>");
+            document.write("<td>" + test_list[i].id + "</td>");
+            document.write("<td>" + test_list[i].sub_date + "</td>");
+            document.write("<td>" + test_list[i].done + "</td>");
+            document.write("<td>" + test_list[i].grade + "</td>");        
+            document.write("<td>" + test_list[i].total + "</td>");  
             if (test_list[i].done == 'O') {
-                document.write("<td>" + "&nbsp" + "<a id=\"did_id\" href = \"didtest.html\" + >" + test_list[i].name+"</a></td>");
+                document.write("<td>" + "<a id=\"did_id\" href = \"didtest.html\" + >"+ "열람하기" + "</a></td>");
             }
             else if (test_list[i].done == 'X') {
-                document.write("<td>" + "&nbsp" + "<a id=\"will_id\" href = \"willtest.html\" + >"+ test_list[i].name+"</a></td>");
-            }
-            document.write("<td>" + "&nbsp" + test_list[i].id + "</td>");
-            document.write("<td>" + "&nbsp" + test_list[i].sub_date + "</td>");
-            document.write("<td>" + "&nbsp" + test_list[i].done);
-            document.write("<td>" + "&nbsp" + test_list[i].grade);        
-            document.write("<td>" + "&nbsp" + test_list[i].total);         
-            document.write("</td></tr>");
+                document.write("<td>" + "<a id=\"will_id\" href = \"willtest.html\" + >"+ "열람하기" + "</a></td>");
+            }      
+            document.write("</tr>");
         }
         document.write("</table>");
         document.write("<br>");
         document.write("</td></tr></table>");
-        function search() {
         
-        }
-        function sort() {
-
+        function search_fun() {
+            var key = document.getElementById('search').value;
+            if (key == ""){
+                alert("검색어를 입력해주세요");
+                return;
+            }
+            var temp_list = JSON.parse(s);
+            var table = document.getElementById('inner');
+            i = 1;
+            while ( i < table.rows.length) {
+                var cmp_n = document.getElementsByTagName('td')[7*(i-1)+1].childNodes[0].nodeValue;
+                if (cmp_n == key) {
+                    i++;
+                    
+                }
+                else {
+                    table.deleteRow(i);
+                }
+            }
         }
     </script>
   </body>
