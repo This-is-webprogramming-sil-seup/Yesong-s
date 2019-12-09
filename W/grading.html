@@ -22,7 +22,7 @@
                 background-color: #DADADA;
             }
 
-            #stuInfo, #complete{
+            #stuInfo, #complete, #grading{
                 padding:15px;
                 border-radius:5px;
                 display:table;
@@ -36,6 +36,13 @@
                 text-align: center;
             }
 
+            input[type="checkbox"]{
+                width:30px;
+                height:30px;
+                
+            }
+
+
             .btn {
                 background-color: #00b4ab;
                 border: 0px;
@@ -45,6 +52,40 @@
                 margin-left: auto;
                 margin-right: auto;
             }
+
+            table{
+                background-color: white;
+                margin-left: auto;
+                margin-right: auto;
+                border-collapse: collapse;
+                border: 1px solid gray;
+            }
+
+            th, td{
+                border: 1px solid gray;
+                padding:5px;
+            }
+
+            .title{
+                font-weight:bold;
+                background-color:#DADADA;
+                width:300px;
+                text-align:center;
+            }
+
+            #q, #sa, #a{
+                width:150px;
+            }
+
+            #p{
+                width:80px;
+            }
+
+            #check{
+                width:40px;
+            }
+
+
 
 
         </style>
@@ -57,6 +98,45 @@
 
         <br>
 
+        <div id="grading">
+            <h3>채점하기</h3>
+            <h4>객관식</h4>
+            <table id="multiple">
+                <tr>
+                    <td class="title" id="q">문제</td>
+                    <td class="title" id="sa">제출답안</td>
+                    <td class="title" id="a">답</td>
+                    <td class="title" id="p">배점</td>
+                    <td class="title" id="check">채점</td>
+                </tr>
+                <tbody id="mulanswer"></tbody>
+
+            </table>
+
+            <br>
+            <h4>주관식</h4>
+            <table id="short">
+                <tr>
+                    <td class="title" id="q">문제</td>
+                    <td class="title" id="sa">제출답안</td>
+                    <td class="title" id="a">답</td>
+                    <td class="title" id="p">배점</td>
+                    <td class="title" id="check">채점</td>
+                </tr>
+
+            </table>
+
+            <br>
+
+
+            <input type="button" id="cccc" class="btn" value="채점하기" onclick="scoring()">
+
+            <form>
+                <p id="score">점수 : </p>
+            </form>
+        </div>
+
+        <br>
 
         <div id="complete">
             <input type="button" value="채점완료" class="btn"  onclick="complete()" id="com">
@@ -67,8 +147,17 @@
 
 
         <script>
+
+            var s = '[]';
+            var ans = '[]'
+
             var testname = getTestName();
             var stuname = getStuName();
+            var tests = eval("(" + s + ")");
+            var answers = eval("("+anw+")");
+            var length = Object.keys(tests).length;
+            var i = getTestNum();
+
 
             function init(){
                 var info = document.getElementById("info");
@@ -78,6 +167,47 @@
                 s += "학생명 : " + stuname;
                 info.innerHTML = s;
 
+                testlist();
+
+            }
+
+            function testlist(){
+                var mult=document.getElementById("multiple");
+                for(var j=0;j<tests[i].multipleChoice.length;j++){
+                    var row = mult.insertRow(mult.rows.length);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+
+                    var q = tests[i].multipleChoice[j].question+ "<br>";
+                    for(var k=0;k<tests[i].multipleChoice[j].exampleNum;k++){
+                        q += ((k+1)+") "+ tests[i].multipleChoice[j].examples[k].보기+"<br>");
+                    }
+
+                    cell1.innerHTML = q;
+                    cell2.innerHTML = "<center></center>";
+                    cell3.innerHTML = "<center>"+tests[i].multipleChoice[j].answer+"</center>";
+                    cell4.innerHTML = "<center>"+tests[i].multipleChoice[j].points+"</center>";
+                    cell5.innerHTML = "<center><input type='checkbox' id='checkbox'/></center>";
+                }
+
+                var short = document.getElementById("short");
+                for(var j=0;j<tests[i].shortAnswer.length;j++){
+                    var row = short.insertRow(short.rows.length);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+
+                    cell1.innerHTML = tests[i].shortAnswer[j].question;
+                    cell2.innerHTML = "<center></center>";
+                    cell3.innerHTML = "<center>"+tests[i].shortAnswer[j].answer+"</center>";
+                    cell4.innerHTML = "<center>"+tests[i].shortAnswer[j].points+"</center>";
+                    cell5.innerHTML = "<center><input type='checkbox' id='checkbox'/></center>";
+                }
             }
 
             function getTestName(){
@@ -90,6 +220,46 @@
                 var temp = decodeURI(location.href).split("?");
                 var tmp = temp[2];
                 return tmp;
+            }
+
+            function getTestNum(name){
+                for(var i=0;i<length;i++){
+                    if(testname == tests[i].name){
+                        return i;
+                    }
+                }
+            }
+
+            function scoring(){
+                var score=0;
+                var k=1;
+                var mult = document.getElementById('multiple');
+                for (; k < mult.rows.length; k++) {
+
+                    if (document.getElementsByTagName("tr")[k].cells[4].firstChild.firstChild.checked) {
+                        var tmp = document.getElementsByTagName("tr")[k].cells[3].firstChild.firstChild.nodeValue;
+                        var point = parseInt(tmp);
+                        score += point;
+                    }
+                }
+
+                // var short = document.getElementById('short');
+                // for (var k = 1; k < short.rows.length; k++) {
+                //     if (document.getElementsByTagName("tr")[k].cells[4].firstChild.firstChild.checked) {
+                //         var tmp = document.getElementsByTagName("tr")[k].cells[3].firstChild.firstChild.nodeValue;
+                //         var point = parseInt(tmp);
+                //         score += point;
+                //     }
+                // }
+
+                
+                var p = document.getElementById("score");
+                p.innerHTML = "점수 : "+score;
+            }
+
+
+            function complete(){
+                window.history.back();
             }
         </script>
     </body>
