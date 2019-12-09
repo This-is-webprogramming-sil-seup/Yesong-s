@@ -7,6 +7,84 @@ pageEncoding="utf-8"%>
 <meta charset="utf-8">
 
 <head>
+<style>
+  body { background-color: #DADADA; text-align: center; }
+    .register_btn {
+      margin-top: 10px;
+      width: 450px;
+      height: 45px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    #registerName {
+      width: 450px;
+      height: 30px;
+      color: gray;
+      margin-top: 10px;
+    }
+    #registerID {
+      width: 374px;
+      height: 30px;
+      color: gray;
+      margin-top: 10px;
+    }
+    #dup_id {
+      width: 70px;
+      height: 30px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b4ab;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    #registerPW {
+      width: 450px;
+      height: 30px;
+      color: gray;
+      margin-top: 10px;
+    }
+    #registerRePW {
+      width: 450px;
+      height: 30px;
+      color: gray;
+      margin-top: 10px;
+    }
+    #chk_info1 {
+      margin-top: 15px;
+    }
+    #reset_write {
+      width: 80px;
+      height: 30px;
+      margin-top: 10px;
+      margin-right: 5px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #6e6e6e;
+      color: white;
+      font-weight: bold;
+    } 
+    #back {
+      width: 75px;
+      height: 30px;
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #6e6e6e;
+      color: white;
+      font-weight: bold;
+    }
+    #here:hover {
+      color: red;
+    }
+</style>
 </head>
 
 <body>
@@ -22,6 +100,7 @@ pageEncoding="utf-8"%>
       ids.add(rs.getString("user_id"));
     }
   %>
+  <h1 style="font-weight:bold; color: #00b4ab;"> 회원가입 페이지 </h1>
   <script>
     function info_check() {
       var id = document.getElementById("registerID").value;
@@ -71,17 +150,26 @@ pageEncoding="utf-8"%>
     }
   </script>
   <form action="registerCheck.jsp" method="post">
-    <label>ID : <input type="text" id="registerID" name="id" />
-      <input type="button" name="check_dup" value="중복체크" onclick="id_check()" /> </label><br>
-    <label>PW : <input type="password" id="registerPW" name="pw" /></label><br>
-    <label>Re-PW : <input type="password" id="registerRePW" /></label><br>
-    <label>이름 : <input type="text" id="registerName" name="name" /></label><br>
-    <label>등급 : <input type="radio" id="chk_info1" value="professor" name="grade1" /> 교수자
-      <input type="radio" id="chk_info2" value="student" name="grade2" /> 학습자 </label><br><br>
-    <input type="submit" name="register" value="가입" onclick="info_check()" />
-    &nbsp<input type="reset" value="다시작성" />
-    &nbsp<input type="button" name="cancel" value="취소" onclick="location.href='login.jsp'" />
+  <table style="margin: 0 auto;">
+      <tr style="background-color:white;"><td style="width:500px; border-radius:5px;">
+      <label> <input type="text" id="registerName" placeholder="이름"/></label><br>
+      <label> <input type="text" id="registerID" placeholder="아이디" />
+      <input type="button" id="dup_id" name="check_dup" value="중복체크"/> </label><br>
+      <label> <input type="password" id="registerPW" placeholder="비밀번호" /></label><br>
+      <label> <input type="password" id="registerRePW" placeholder="비밀번호 확인" /></label><br>
+      <label style="font-size:14px; color: #505050;"> <b>등급<b> :&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <input type="radio" id="chk_info1" value="professor"/> 교수자
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <input type="radio" id="chk_info2" value="student"/> 학습자 </a> </label><br>
+      <input type ="button" class="register_btn" name="register" value="회원가입" onclick="info_check()" />
+      &nbsp<input type ="reset" id="reset_write" value="다시 작성"/>
+      &nbsp<input type="button" name="cancel" value="취소" onclick="location.href='login.jsp'" />
   </form>
+  <table style="margin: 0 auto; margin-top:10px;">
+    <tr style="background-color:white;"><td style="width:483px; border-radius:5px; padding:10px; font-size:13px;">
+    로그인 할 계정이 있다면 <a id="here" href="login.html"> 여기</a>를 눌러주세요.
+    </td></tr>
+  </table>
 </body>
 
 </html>
