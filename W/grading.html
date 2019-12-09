@@ -3,8 +3,94 @@
 <html>
     <head>
         <h2>응시생 채점</h2>
+        <style>
+            h2 {
+                color: #00b4ab;
+                text-align: center;
+            }
+
+            h3{
+                padding-left:30px;
+            }
+            
+            h4{
+                padding-left:50px;
+                color:gray;
+            }
+
+            body {
+                background-color: #DADADA;
+            }
+
+            #stuInfo, #complete{
+                padding:15px;
+                border-radius:5px;
+                display:table;
+                width:800px;
+                margin-left:auto;
+                margin-right:auto;
+                background-color: white;
+            }
+
+            #complete{
+                text-align: center;
+            }
+
+            .btn {
+                background-color: #00b4ab;
+                border: 0px;
+                color: white;
+                width: 800px;
+                height: 40px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+        </style>
     </head>
-    <body>
-        
+    <body onload="init()">
+        <div id="stuInfo">
+            <h3>시험 및 학생 정보</h3>
+            <h4 id="info"></h4>
+        </div>
+
+        <br>
+
+
+        <div id="complete">
+            <input type="button" value="채점완료" class="btn"  onclick="complete()" id="com">
+        </div>
+
+
+
+
+
+        <script>
+            var testname = getTestName();
+            var stuname = getStuName();
+
+            function init(){
+                var info = document.getElementById("info");
+                var s = "";
+
+                s += "시험명 : " + testname + "<br>";
+                s += "학생명 : " + stuname;
+                info.innerHTML = s;
+
+            }
+
+            function getTestName(){
+                var temp = decodeURI(location.href).split("?");
+                var testName = temp[1];
+                return testName;
+            }
+
+            function getStuName(){
+                var temp = decodeURI(location.href).split("?");
+                var tmp = temp[2];
+                return tmp;
+            }
+        </script>
     </body>
 </html>
